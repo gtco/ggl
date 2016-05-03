@@ -4,8 +4,9 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
-#include "SDL.h"
+#include "SDL2/SDL.h"
 
 struct ggl_game {
 	bool is_running_;

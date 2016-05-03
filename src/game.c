@@ -43,7 +43,7 @@ void ggl_game_destroy(struct ggl_game *game)
 void ggl_game_render(struct ggl_game *game)
 {
 	// renderer, red, green, blue, alpha
-	SDL_SetRenderDrawColor(game->renderer_, 0xff, 0xff, 0xff, 0xff);
+	SDL_SetRenderDrawColor(game->renderer_, 0xff, 0x66, 0x00, 0xff);
 	SDL_RenderClear(game->renderer_);
 	//	SDL_RenderCopy(renderer_, texture, &sourceRect, &destRect);
 	SDL_RenderPresent(game->renderer_);
