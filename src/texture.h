@@ -2,8 +2,17 @@
 
 #include <assert.h>
 
+#ifdef _WIN32
+#include "SDL.h"
+#include "SDL_image.h"
+#elif __APPLE__
 #include "SDL2/SDL.h"
 #include "SDL2_image/SDL_image.h"
+#elif __linux__
+#include "SDL2/SDL.h"
+#include "SDL2/SDL_image.h"
+#endif
+
 
 struct ggl_texture
 {

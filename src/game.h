@@ -6,7 +6,14 @@
 #include <string.h>
 #include <stdbool.h>
 
+#ifdef _WIN32
+#include "SDL.h"
+#elif __APPLE__
 #include "SDL2/SDL.h"
+#elif __linux__
+#include "SDL2/SDL.h"
+#endif
+
 
 struct ggl_game {
 	bool is_running_;
