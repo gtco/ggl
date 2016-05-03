@@ -45,7 +45,7 @@ void ggl_game_render(struct ggl_game *game)
 	// renderer, red, green, blue, alpha
 	SDL_SetRenderDrawColor(game->renderer_, 0xff, 0x66, 0x00, 0xff);
 	SDL_RenderClear(game->renderer_);
-	//	SDL_RenderCopy(renderer_, texture, &sourceRect, &destRect);
+	ggl_scene_draw(game->current_scene, game->renderer_);
 	SDL_RenderPresent(game->renderer_);
 }
 
@@ -62,5 +62,12 @@ void ggl_game_handle_events(struct ggl_game *game)
 		default:
 			break;
 		}
+
+		ggl_scene_handler_events(game->current_scene, event);
 	}
+}
+
+void ggl_game_update(struct ggl_game * game, uint32_t elapsed)
+{
+	ggl_scene_update(game->current_scene, elapsed);
 }
