@@ -12,6 +12,7 @@
 #ifdef _WIN32
 #include "SDL.h"
 #include "SDL_image.h"
+#include "GL/glew.h"
 #elif __APPLE__
 #include "SDL2/SDL.h"
 #include "SDL2_image/SDL_image.h"

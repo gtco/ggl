@@ -26,20 +26,29 @@ bool ggl_game_init(struct ggl_game *game, const char* title, int xpos, int ypos,
             
             if (game->gl_context_ == 0)
             {
-                log_err("Failed to create Open GL context");
+				const char* err = SDL_GetError();
+                log_err("Failed to create Open GL context %s", err);
                 return false;
             }
             
+#ifdef _WIN32
+			//Set up glew (optional but recommended)
+			GLenum error = glewInit();
+			if (error != GLEW_OK) {
+				log_err("Could not initialize glew!");
+			}
+#endif
             sprite = ggl_sprite_create();
             ggl_sprite_init(sprite, -1.0f, -1.0f, 1.0f, 1.0f);
             
             SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
             glClearColor(1.0f, 0.6f, 0.0f, 1.0f);
-            
+
             glsl = malloc(sizeof(struct ggl_glsl)); ;
             ggl_glsl_compile_shaders(glsl, "shaders/colorShading.vert", "shaders/colorShading.frag");
             ggl_glsl_bind_attribute(glsl);
             ggl_glsl_link_shaders(glsl);
+
 		}
 	}
 	else
@@ -63,7 +72,7 @@ void ggl_game_render(struct ggl_game *game)
 {
     glClearDepth(1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
+
     glUseProgram(glsl->program_id);
     glEnableVertexAttribArray(0);
     
@@ -71,7 +80,7 @@ void ggl_game_render(struct ggl_game *game)
     
     glUseProgram(0);
     glDisableVertexAttribArray(0);
-    
+
     SDL_GL_SwapWindow(game->window_);
 }
 
