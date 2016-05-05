@@ -4,8 +4,8 @@ struct ggl_scene *ggl_scene_create()
 {
 	struct ggl_scene *scene = malloc(sizeof(struct ggl_scene));
 	assert(scene != NULL);
-	scene->id = 1;
-	strcpy(scene->name, "default");
+	scene->id_ = 1;
+	strcpy(scene->name_, "default");
 
 	return scene;
 }
