@@ -9,6 +9,7 @@ struct ggl_game {
 	SDL_Window *window_;
 	SDL_Renderer *renderer_;
 	struct ggl_scene *current_scene;
+    SDL_GLContext gl_context_;
 };
 
 struct ggl_game *ggl_game_create();

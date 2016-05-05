@@ -17,9 +17,17 @@ bool ggl_game_init(struct ggl_game *game, const char* title, int xpos, int ypos,
 		game->window_ = SDL_CreateWindow(title, xpos, ypos, height, width,flags);
 
 		if (game->window_ != 0)
-		{
-			// window, drive, render flags
-			game->renderer_ = SDL_CreateRenderer(game->window_, -1, 0);
+		{            
+            game->gl_context_ = SDL_GL_CreateContext(game->window_);
+            
+            if (game->gl_context_ == 0)
+            {
+                log_err("Failed to create Open GL context");
+                return false;
+            }
+            
+            SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+            glClearColor(1.0f, 0.6f, 0.0f, 1.0f);
 		}
 	}
 	else
@@ -42,11 +50,18 @@ void ggl_game_destroy(struct ggl_game *game)
 
 void ggl_game_render(struct ggl_game *game)
 {
-	// renderer, red, green, blue, alpha
-	SDL_SetRenderDrawColor(game->renderer_, 0xff, 0x66, 0x00, 0xff);
-	SDL_RenderClear(game->renderer_);
-	ggl_scene_draw(game->current_scene, game->renderer_);
-	SDL_RenderPresent(game->renderer_);
+    glClearDepth(1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    glEnableClientState(GL_COLOR_ARRAY);
+    glBegin(GL_TRIANGLES);
+    glColor3f(1.0f, 1.0f, 1.0f);
+    glVertex2f(0, 0);
+    glVertex2f(0, 200);
+    glVertex2f(200, 200);
+    glEnd();
+    
+    SDL_GL_SwapWindow(game->window_);
 }
 
 void ggl_game_handle_events(struct ggl_game *game)
