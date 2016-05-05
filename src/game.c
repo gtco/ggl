@@ -27,6 +27,7 @@ bool ggl_game_init(struct ggl_game *game, const char* title, int xpos, int ypos,
 		return false;
 	}
 
+	game->current_scene = ggl_scene_create();
 	game->is_running_ = true;
 	return true;
 }
@@ -35,6 +36,7 @@ void ggl_game_destroy(struct ggl_game *game)
 {
 	assert(game != NULL);
 	game->is_running_ = false;
+	ggl_scene_destroy(game->current_scene);
 	SDL_DestroyWindow(game->window_);
 	SDL_DestroyRenderer(game->renderer_);
 	free(game);
@@ -63,7 +65,7 @@ void ggl_game_handle_events(struct ggl_game *game)
 			break;
 		}
 
-		ggl_scene_handler_events(game->current_scene, event);
+		ggl_scene_handle_events(game->current_scene, event);
 	}
 }
 

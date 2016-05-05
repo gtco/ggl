@@ -1,7 +1,5 @@
 #pragma once
 
-#include <assert.h>
-
 #include "ggl.h"
 
 struct ggl_texture
