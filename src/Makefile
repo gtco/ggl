@@ -1,5 +1,5 @@
 #OBJS specifies which files to compile as part of the project
-OBJS = texture.c game.c main.c
+OBJS = texture.c scene.c glsl.c game.c main.c
 
 #CC specifies which compiler we're using
 CC = gcc
@@ -9,7 +9,7 @@ CC = gcc
 COMPILER_FLAGS = -w
 
 #LINKER_FLAGS specifies the libraries we're linking against
-LINKER_FLAGS = -lSDL2 -lSDL2_image
+LINKER_FLAGS = -lSDL2 -lSDL2_image -lGL
 
 #OBJ_NAME specifies the name of our exectuable
 OBJ_NAME = ggl.core
