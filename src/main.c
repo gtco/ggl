@@ -1,31 +1,6 @@
 #include "ggl.h"
 #include "game.h"
 
-/*
-void load_image()
-{
-	SDL_Surface *surface = IMG_Load("data/8tiles.png");
-	texture = SDL_CreateTextureFromSurface(renderer, surface);
-	SDL_FreeSurface(surface);
-
-	//	SDL_QueryTexture(texture, NULL, NULL, &sourceRect.w, &sourceRect.h);
-
-	int i = 6;
-	int n = (32 * i) + ((i + 1) * 10);
-
-	sourceRect.w = 32;
-	sourceRect.h = 32;
-
-	sourceRect.x = n;
-	sourceRect.y = 10;
-	destRect.x = (SCREEN_WIDTH/2) - 16;
-	destRect.y = (SCREEN_HEIGHT/2) - 16;
-
-	destRect.w = sourceRect.w;
-	destRect.h = sourceRect.h;
-}
-*/
-
 int main(int argc, char** argv)
 {
 	debug("Starting game");

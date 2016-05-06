@@ -2,74 +2,41 @@
 
 void ggl_glsl_compile_shaders(struct ggl_glsl *glsl, const char* vertex_fp, const char* fragment_fp)
 {
-    glsl->vertex_id = 0;
-    glsl->fragment_id = 0;
-	glsl->program_id = 0;
-    glsl->program_id = glCreateProgram();
-    
-    char *vs_buffer = ggl_glsl_read_file(vertex_fp);
-    glsl->vertex_id = glCreateShader(GL_VERTEX_SHADER);
-    if (glsl->vertex_id == 0)
-    {
-        log_err("Failed to create vertex shader id");
-    }
-    const char* v = vs_buffer;
-    glShaderSource(glsl->vertex_id, 1, &v, NULL);
-    
-	//compile the shader
-	glCompileShader(glsl->vertex_id);
+	glsl->program_id = glCreateProgram();
+	glsl->vertex_id = glCreateShader(GL_VERTEX_SHADER);
+	glsl->fragment_id = glCreateShader(GL_FRAGMENT_SHADER);
+	ggl_glsl_compile_shader(glsl->vertex_id, vertex_fp);
+    ggl_glsl_compile_shader(glsl->fragment_id, fragment_fp);
+}
 
-    GLint success = 0;
-    glGetShaderiv(glsl->vertex_id, GL_COMPILE_STATUS, &success);
-    if(success != GL_TRUE)
-    {
-        GLint infoLogLength;
-        glGetShaderiv(glsl->vertex_id, GL_INFO_LOG_LENGTH, &infoLogLength);
-        
-        GLchar* strInfoLog = malloc(sizeof(char) * (infoLogLength + 1));
-        glGetShaderInfoLog(glsl->vertex_id, infoLogLength, NULL, strInfoLog);
-        
-        log_err("Compilation error in shader %s\n", strInfoLog);
+void ggl_glsl_compile_shader(GLuint id, const char* fp)
+{
+	assert(id != 0);
+	char *buffer = ggl_glsl_read_file(fp);
 
-        free(strInfoLog);
-        
-        //We don't need the shader anymore.
-        glDeleteShader(glsl->vertex_id);
-    }
+	glShaderSource(id, 1, &buffer, NULL);
+	glCompileShader(id);
 
-    char *fs_buffer = ggl_glsl_read_file(fragment_fp);
-    glsl->fragment_id = glCreateShader(GL_FRAGMENT_SHADER);
-    if (glsl->fragment_id == 0)
-    {
-        log_err("Failed to create fragment shader id");
-    }
-    const char* f = fs_buffer;
-    glShaderSource(glsl->fragment_id, 1, &f, NULL);
-    
-	//compile the shader
-	glCompileShader(glsl->fragment_id);
+	GLint success = 0;
+	glGetShaderiv(id, GL_COMPILE_STATUS, &success);
+	debug("GLSL compilation status = %d for %s", success, fp);
+	if (success != GL_TRUE)
+	{
+		GLint log_length;
+		glGetShaderiv(id, GL_INFO_LOG_LENGTH, &log_length);
 
-    success = 0;
-    glGetShaderiv(glsl->fragment_id, GL_COMPILE_STATUS, &success);
-    
-    if(success != GL_TRUE)
-    {
-        GLint infoLogLength;
-        glGetShaderiv(glsl->vertex_id, GL_INFO_LOG_LENGTH, &infoLogLength);
-        
-        GLchar* strInfoLog = malloc(sizeof(char) * (infoLogLength + 1));
-        glGetShaderInfoLog(glsl->vertex_id, infoLogLength, NULL, strInfoLog);
-        
-        log_err("Compilation error in shader %s\n", strInfoLog);
-        
-        free(strInfoLog);
-        
-        //We don't need the shader anymore.
-        glDeleteShader(glsl->vertex_id);
-    }
-    
-    free(vs_buffer);
-    free(fs_buffer);
+		GLchar* info_log = malloc(sizeof(char) * (log_length + 1));
+		glGetShaderInfoLog(id, log_length, NULL, info_log);
+
+		log_err("File %s : GLSL compilation error %s", fp, info_log);
+
+		free(info_log);
+
+		//We don't need the shader anymore.
+		glDeleteShader(id);
+	}
+
+	free(buffer);
 }
 
 void ggl_glsl_link_shaders(struct ggl_glsl *glsl)
@@ -135,4 +102,8 @@ char *ggl_glsl_read_file(const char* file_path)
     return buffer;
 }
 
-
+void ggl_glsl_destroy(struct ggl_glsl *glsl)
+{
+    assert (glsl != NULL);
+    free(glsl);
+}

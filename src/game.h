@@ -8,8 +8,9 @@ struct ggl_game {
 	bool is_running_;
 	SDL_Window *window_;
 	SDL_Renderer *renderer_;
-	struct ggl_scene *current_scene;
     SDL_GLContext gl_context_;
+    struct ggl_sprite *sprite_;
+    struct ggl_glsl *glsl_;
 };
 
 struct ggl_game *ggl_game_create();

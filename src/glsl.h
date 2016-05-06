@@ -9,6 +9,8 @@ struct ggl_glsl {
 };
 
 void ggl_glsl_compile_shaders(struct ggl_glsl *glsl, const char* vertex_fp, const char* fragment_fp);
+void ggl_glsl_compile_shader(GLuint id, const char* fp);
 void ggl_glsl_link_shaders(struct ggl_glsl *glsl);
 char *ggl_glsl_read_file(const char* file_path);
 void ggl_glsl_bind_attribute(struct ggl_glsl *glsl);
+void ggl_glsl_destroy(struct ggl_glsl *glsl);

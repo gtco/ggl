@@ -91,7 +91,7 @@
       <AdditionalIncludeDirectories>c:\glew\include;C:\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_net.lib;native_midi.lib;timidity.lib;opengl32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\glew\lib\Release\Win32;C:\SDL2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
