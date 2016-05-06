@@ -22,6 +22,9 @@ bool ggl_game_init(struct ggl_game *game, const char* title, int xpos, int ypos,
 
 		if (game->window_ != 0)
 		{
+#ifdef __APPLE__
+            SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+#endif
             game->gl_context_ = SDL_GL_CreateContext(game->window_);
             
             if (game->gl_context_ == 0)
@@ -30,8 +33,14 @@ bool ggl_game_init(struct ggl_game *game, const char* title, int xpos, int ypos,
                 log_err("Failed to create Open GL context %s", err);
                 return false;
             }
-            
-#ifdef _WIN32
+
+#ifdef __APPLE__
+            GLuint vertexArrayID;
+            glGenVertexArrays(1, &vertexArrayID);
+            glBindVertexArray(vertexArrayID);
+#endif
+
+ #ifdef _WIN32
 			//Set up glew (optional but recommended)
 			GLenum error = glewInit();
 			if (error != GLEW_OK) {

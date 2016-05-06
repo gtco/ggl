@@ -16,10 +16,8 @@
 #elif __APPLE__
 #include "SDL2/SDL.h"
 #include "SDL2_image/SDL_image.h"
-#include <OpenGL/gl.h>
-#include <OpenGL/glu.h>
-#include <OpenGL/glext.h>
-#include <GLUT/glut.h>
+#include <OpenGL/gl3.h>
+#include <OpenGL/gl3ext.h>
 #elif __linux__
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
