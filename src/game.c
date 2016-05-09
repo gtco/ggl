@@ -2,6 +2,8 @@
 #include "glsl.h"
 #include "sprite.h"
 
+float interval = 0.0f;
+
 struct ggl_game *ggl_game_create() 
 {
 	struct ggl_game *game = malloc(sizeof(struct ggl_game));
@@ -47,7 +49,7 @@ bool ggl_game_init(struct ggl_game *game, const char* title, int xpos, int ypos,
 			}
 #endif
             game->sprite_ = ggl_sprite_create();
-            ggl_sprite_init(game->sprite_, -0.1f, -0.1f, 0.2f, 0.2f);
+            ggl_sprite_init(game->sprite_, -0.5f, -0.5f, 1.0f, 1.0f);
             
             SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
             glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -89,6 +91,9 @@ void ggl_game_render(struct ggl_game *game)
     glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
     
+	GLuint time_location = ggl_glsl_get_uniform_location(game->glsl_, "time");
+	glUniform1f(time_location, interval);
+
     ggl_sprite_draw(game->sprite_);
     
     glUseProgram(0);
@@ -116,5 +121,6 @@ void ggl_game_handle_events(struct ggl_game *game)
 
 void ggl_game_update(struct ggl_game * game, uint32_t elapsed)
 {
+	interval = interval + 0.001f;
 }
 

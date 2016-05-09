@@ -37,6 +37,9 @@ void ggl_glsl_compile_shader(GLuint id, const char* fp)
 	}
 
 	free(buffer);
+
+	// abort on failed compilation
+	assert(success == GL_TRUE);
 }
 
 void ggl_glsl_link_shaders(struct ggl_glsl *glsl)
@@ -107,4 +110,16 @@ void ggl_glsl_destroy(struct ggl_glsl *glsl)
 {
     assert (glsl != NULL);
     free(glsl);
+}
+
+GLuint ggl_glsl_get_uniform_location(struct ggl_glsl *glsl, const char *uniformName)
+{
+	GLuint location = glGetUniformLocation(glsl->program_id, uniformName);
+
+	if (location == GL_INVALID_INDEX)
+	{
+		debug("glGetUniformLocation returned an invalid index for name %s", uniformName);
+	}
+
+	return location;
 }

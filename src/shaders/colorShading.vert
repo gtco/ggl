@@ -1,5 +1,7 @@
 #version 140
-
+//
+// VERTEX SHADER
+//
 in vec2 vertexPosition;
 in vec4 vertexColor;
 // identical variable name in fragment shader

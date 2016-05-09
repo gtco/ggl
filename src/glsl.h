@@ -14,3 +14,5 @@ void ggl_glsl_link_shaders(struct ggl_glsl *glsl);
 char *ggl_glsl_read_file(const char* file_path);
 void ggl_glsl_bind_attribute(struct ggl_glsl *glsl);
 void ggl_glsl_destroy(struct ggl_glsl *glsl);
+GLuint ggl_glsl_get_uniform_location(struct ggl_glsl *glsl, const char *uniformName);
+
