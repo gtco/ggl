@@ -1,5 +1,6 @@
 #include "game.h"
 #include "glsl.h"
+#include "sprite.h"
 
 struct ggl_game *ggl_game_create() 
 {
@@ -46,10 +47,10 @@ bool ggl_game_init(struct ggl_game *game, const char* title, int xpos, int ypos,
 			}
 #endif
             game->sprite_ = ggl_sprite_create();
-            ggl_sprite_init(game->sprite_, -1.0f, -1.0f, 1.0f, 1.0f);
+            ggl_sprite_init(game->sprite_, -0.1f, -0.1f, 0.2f, 0.2f);
             
             SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-            glClearColor(1.0f, 0.6f, 0.0f, 1.0f);
+            glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
             game->glsl_ = malloc(sizeof(struct ggl_glsl)); ;
             ggl_glsl_compile_shaders(game->glsl_, "shaders/colorShading.vert", "shaders/colorShading.frag");
@@ -86,11 +87,13 @@ void ggl_game_render(struct ggl_game *game)
 
     glUseProgram(game->glsl_->program_id);
     glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
     
     ggl_sprite_draw(game->sprite_);
     
     glUseProgram(0);
     glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(1);
 
     SDL_GL_SwapWindow(game->window_);
 }
@@ -115,88 +118,3 @@ void ggl_game_update(struct ggl_game * game, uint32_t elapsed)
 {
 }
 
-struct ggl_sprite *ggl_sprite_create()
-{
-    struct ggl_sprite *sprite = malloc(sizeof(struct ggl_sprite));
-    assert(sprite != NULL);
-
-    sprite->x = 0;
-    sprite->y = 0;
-    sprite->height = 0;
-    sprite->width = 0;
-    sprite->vbo_id = 0;
-    
-    return sprite;
-    
-}
-
-bool ggl_sprite_init(struct ggl_sprite *sprite, float x, float y, float height, float width)
-{
-    sprite->x = x;
-    sprite->y = y;
-    sprite->height = height;
-    sprite->width = width;
-    
-    if (sprite->vbo_id == 0)
-    {
-        glGenBuffers(1, &sprite->vbo_id);
-    }
-    
-    // Quad : 2 Triangles (3 vertices per triangle) = 6
-    // x and y coord = 2
-    float vertex_data[12];
-    
-    // top right
-    vertex_data[0] = x + width;
-    vertex_data[1] = y + height;
-    // top left
-    vertex_data[2] = x ;
-    vertex_data[3] = y + height;
-    // bottom left
-    vertex_data[4] = x;
-    vertex_data[5] = y;
-    // 2nd triangle
-    vertex_data[6] = x;
-    vertex_data[7] = y;
-    // bottom right
-    vertex_data[8] = x + width;
-    vertex_data[9] = y;
-    
-    vertex_data[10] = x + width;
-    vertex_data[11] = y + height;
-    
-    glBindBuffer(GL_ARRAY_BUFFER, sprite->vbo_id);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_data), vertex_data, GL_STATIC_DRAW);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    
-    return true;
-}
-
-void ggl_sprite_draw(struct ggl_sprite *sprite)
-{
-    glBindBuffer(GL_ARRAY_BUFFER, sprite->vbo_id);
-    
-    glEnableVertexAttribArray(0);
-    
-    // 2 = elements (x,y)
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
-    
-    // 6 = # of vertices
-    glDrawArrays(GL_TRIANGLES, 0, 6);
-    
-    glDisableVertexAttribArray(0);
-    
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-}
-
-void ggl_sprite_destroy(struct ggl_sprite *sprite)
-{
-    assert(sprite != NULL);
-
-    if (sprite->vbo_id != 0)
-    {
-        glDeleteBuffers(1, &sprite->vbo_id);
-    }
-
-    free(sprite);
-}

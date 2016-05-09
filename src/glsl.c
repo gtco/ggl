@@ -73,6 +73,7 @@ void ggl_glsl_link_shaders(struct ggl_glsl *glsl)
 void ggl_glsl_bind_attribute(struct ggl_glsl *glsl)
 {
     glBindAttribLocation(glsl->program_id, 0, "vertexPosition");
+	glBindAttribLocation(glsl->program_id, 1, "vertexColor");
 }
 
 char *ggl_glsl_read_file(const char* file_path)
