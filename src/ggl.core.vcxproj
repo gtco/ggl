@@ -154,6 +154,7 @@
     <ClCompile Include="scene.c" />
     <ClCompile Include="sprite.c" />
     <ClCompile Include="texture.c" />
+    <ClCompile Include="vertex.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="asset.h" />

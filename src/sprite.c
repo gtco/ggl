@@ -30,30 +30,16 @@ bool ggl_sprite_init(struct ggl_sprite *sprite, float x, float y, float height, 
 
     struct ggl_vertex vertex_data[6];
 
-    vertex_data[0].position.x = x + width;
-    vertex_data[0].position.y = y + height;
-
-    vertex_data[1].position.x = x;
-    vertex_data[1].position.y = y + width;
-
-    vertex_data[2].position.x = x;
-    vertex_data[2].position.y = y;    
-
-    vertex_data[3].position.x = x;
-    vertex_data[3].position.y = y;
-
-    vertex_data[4].position.x = x + width;
-    vertex_data[4].position.y = y;
-
-    vertex_data[5].position.x = x + width;
-    vertex_data[5].position.y = y + width;    
+    ggl_vertex_set_position(&vertex_data[0], x + width, y + height);
+    ggl_vertex_set_position(&vertex_data[1], x, y + height);
+    ggl_vertex_set_position(&vertex_data[2], x, y);
+    ggl_vertex_set_position(&vertex_data[3], x, y);
+    ggl_vertex_set_position(&vertex_data[4], x + width, y);
+    ggl_vertex_set_position(&vertex_data[5], x + width, y + height);
 
 	for (int i = 0; i < 6; i++)
 	{
-		vertex_data[i].color.r = 255;
-		vertex_data[i].color.g = 133;
-		vertex_data[i].color.b = 152;
-		vertex_data[i].color.a = 255;
+        ggl_vertex_set_color(&vertex_data[i], 255, 133, 152, 255);
 	}
 
 	//Tell opengl to bind our vertex buffer object

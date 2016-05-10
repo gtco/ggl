@@ -1,8 +1,10 @@
 #include "game.h"
 #include "glsl.h"
 #include "sprite.h"
+#include "texture.h"
 
 float interval = 0.0f;
+struct ggl_texture *texture = 0;
 
 struct ggl_game *ggl_game_create() 
 {
@@ -55,6 +57,9 @@ bool ggl_game_init(struct ggl_game *game, const char* title, int xpos, int ypos,
 
             game->sprite_ = ggl_sprite_create();
             ggl_sprite_init(game->sprite_, -0.5f, -0.5f, 1.0f, 1.0f);
+
+            texture = ggl_texture_create();
+            ggl_texture_load(texture, "textures/1.png");
 		}
 	}
 	else
@@ -85,8 +90,8 @@ void ggl_game_render(struct ggl_game *game)
 
 	ggl_glsl_enable_shaders(game->glsl_);
     
-	GLint time_location = ggl_glsl_get_uniform_location(game->glsl_, "time");
-	glUniform1f(time_location, interval);
+	//GLint time_location = ggl_glsl_get_uniform_location(game->glsl_, "time");
+	//glUniform1f(time_location, 0);
 
     ggl_sprite_draw(game->sprite_);
     

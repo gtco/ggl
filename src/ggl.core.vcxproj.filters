@@ -39,6 +39,9 @@
     <ClCompile Include="lodepng.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="vertex.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h">
