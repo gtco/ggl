@@ -1,4 +1,5 @@
 #include "glsl.h"
+#include "asset.h"
 
 void ggl_glsl_compile_shaders(struct ggl_glsl *glsl, const char* vertex_fp, const char* fragment_fp)
 {
@@ -12,7 +13,7 @@ void ggl_glsl_compile_shaders(struct ggl_glsl *glsl, const char* vertex_fp, cons
 void ggl_glsl_compile_shader(GLuint id, const char* fp)
 {
 	assert(id != 0);
-	char *buffer = ggl_glsl_read_file(fp);
+	uint8_t *buffer = ggl_asset_load_file(fp);
 
 	glShaderSource(id, 1, &buffer, NULL);
 	glCompileShader(id);
@@ -79,42 +80,15 @@ void ggl_glsl_bind_attribute(struct ggl_glsl *glsl)
 	glBindAttribLocation(glsl->program_id, 1, "vertexColor");
 }
 
-char *ggl_glsl_read_file(const char* file_path)
-{
-    FILE *fp;
-    long lSize;
-    char *buffer;
-    
-    fp = fopen ( file_path , "rb" );
-    if( !fp ) perror(file_path),exit(1);
-    
-    fseek( fp , 0L , SEEK_END);
-    lSize = ftell( fp );
-    rewind( fp );
-    
-    /* allocate memory for entire content */
-    buffer = calloc( 1, lSize+1 );
-    if( !buffer ) fclose(fp),fputs("memory alloc fails",stderr),exit(1);
-    
-    /* copy the file into the buffer */
-    if( 1!=fread( buffer , lSize, 1 , fp) )
-        fclose(fp),free(buffer),fputs("entire read fails",stderr),exit(1);
-    
-    /* do your work here, buffer is a string contains the whole text */
-    
-    fclose(fp);
-    return buffer;
-}
-
 void ggl_glsl_destroy(struct ggl_glsl *glsl)
 {
     assert (glsl != NULL);
     free(glsl);
 }
 
-GLuint ggl_glsl_get_uniform_location(struct ggl_glsl *glsl, const char *uniformName)
+GLint ggl_glsl_get_uniform_location(struct ggl_glsl *glsl, const char *uniformName)
 {
-	GLuint location = glGetUniformLocation(glsl->program_id, uniformName);
+	GLint location = glGetUniformLocation(glsl->program_id, uniformName);
 
 	if (location == GL_INVALID_INDEX)
 	{

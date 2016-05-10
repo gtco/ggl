@@ -1,12 +1,12 @@
 #OBJS specifies which files to compile as part of the project
-OBJS = texture.c scene.c sprite.c glsl.c game.c main.c
+OBJS = asset.c lodepng.c texture.c scene.c sprite.c glsl.c game.c main.c
 
 #CC specifies which compiler we're using
 CC = gcc
 
 #COMPILER_FLAGS specifies the additional compilation options we're using
 # -w suppresses all warnings
-COMPILER_FLAGS = -w
+COMPILER_FLAGS = -w -DLODEPNG_NO_COMPILE_ENCODER -DLODEPNG_NO_COMPILE_CPP
 
 #LINKER_FLAGS specifies the libraries we're linking against
 LINKER_FLAGS = -lSDL2 -lSDL2_image -lGL

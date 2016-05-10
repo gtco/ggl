@@ -1,4 +1,5 @@
 #include "texture.h"
+#include "lodepng.h"
 
 struct ggl_texture *ggl_texture_create()
 {
@@ -9,34 +10,48 @@ struct ggl_texture *ggl_texture_create()
 	return texture;
 }
 
-void ggl_texture_load(struct ggl_texture *texture, SDL_Renderer* renderer, const char* filename)
+void ggl_texture_load(struct ggl_texture *texture, const char* filename)
 {
-	SDL_Surface *surface = IMG_Load(filename);
-	texture->texture_ = SDL_CreateTextureFromSurface(renderer, surface);
-	SDL_FreeSurface(surface);
-	SDL_QueryTexture(texture->texture_, NULL, NULL, &texture->rect_.w, &texture->rect_.h);
+	unsigned char* image;
+	unsigned width, height;
+	unsigned char* png = 0;
+	size_t pngsize;
+
+	unsigned error = lodepng_load_file(&png, &pngsize, filename);
+	if (!error)
+	{
+		error = lodepng_decode32(&image, &width, &height, png, pngsize);
+	}
+
+	if (error)
+	{
+		debug("error %u: %s\n", error, lodepng_error_text(error));
+	}
+
+	free(png);
+
+	glGenTextures(1, &(texture->id_));
+	
+	glBindTexture(GL_TEXTURE_2D, texture->id_);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);	
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);	
+
+	glGenerateMipmap(GL_TEXTURE_2D);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	texture->width_ = width;
+	texture->height_ = height;
+
+	free(image);
 }
 
 void ggl_texture_destroy(struct ggl_texture *texture)
 {
 	assert(texture != NULL);
-	SDL_DestroyTexture(texture->texture_);
 	free(texture);
-}
-
-void ggl_texture_draw(struct ggl_texture *texture, int x, int y, int width, int height, SDL_Renderer* renderer)
-{
-	SDL_Rect destRect;
-
-	int i = 6;
-	int n = (32 * i) + ((i + 1) * 10);
-	texture->rect_.x = n;
-	texture->rect_.y = 10;
-	
-	destRect.x = x;
-	destRect.y = y;
-	destRect.w = width;
-	destRect.h = height;
-
-	SDL_RenderCopy(renderer, texture->texture_, &texture->rect_, &destRect);
 }

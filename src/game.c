@@ -91,7 +91,7 @@ void ggl_game_render(struct ggl_game *game)
     glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
     
-	GLuint time_location = ggl_glsl_get_uniform_location(game->glsl_, "time");
+	GLint time_location = ggl_glsl_get_uniform_location(game->glsl_, "time");
 	glUniform1f(time_location, interval);
 
     ggl_sprite_draw(game->sprite_);
