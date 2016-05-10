@@ -56,8 +56,11 @@ bool ggl_sprite_init(struct ggl_sprite *sprite, float x, float y, float height, 
 		vertex_data[i].color.a = 255;
 	}
 
+	//Tell opengl to bind our vertex buffer object
     glBindBuffer(GL_ARRAY_BUFFER, sprite->vbo_id);
+	//Upload the data to the GPU
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_data), vertex_data, GL_STATIC_DRAW);
+	//Unbind the buffer (optional)
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
     return true;
@@ -65,21 +68,24 @@ bool ggl_sprite_init(struct ggl_sprite *sprite, float x, float y, float height, 
 
 void ggl_sprite_draw(struct ggl_sprite *sprite)
 {
+	//bind the buffer object
     glBindBuffer(GL_ARRAY_BUFFER, sprite->vbo_id);
     
+	//Tell opengl that we want to use the first
+	//attribute array. We only need one array right
+	//now since we are only using position.
     glEnableVertexAttribArray(0);
     
     // Position Attribute Pointer : 2 = elements (x,y)
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(struct ggl_vertex), (void *) offsetof(struct ggl_vertex, position));
-
     // Color Attribute Pointer 
     glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(struct ggl_vertex), (void *) offsetof(struct ggl_vertex, color));    
     
     // 6 = # of vertices
     glDrawArrays(GL_TRIANGLES, 0, 6);
-    
+	//Disable the vertex attrib array. This is not optional.
     glDisableVertexAttribArray(0);
-    
+	//Unbind the VBO
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 

@@ -9,7 +9,6 @@ struct ggl_game *ggl_game_create()
 	struct ggl_game *game = malloc(sizeof(struct ggl_game));
 	assert(game != NULL);
 	game->is_running_ = false;
-    
     game->glsl_ = NULL;
     game->sprite_ = NULL;
 	return game;
@@ -48,17 +47,14 @@ bool ggl_game_init(struct ggl_game *game, const char* title, int xpos, int ypos,
 				log_err("Could not initialize glew!");
 			}
 #endif
-            game->sprite_ = ggl_sprite_create();
-            ggl_sprite_init(game->sprite_, -0.5f, -0.5f, 1.0f, 1.0f);
-            
             SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
             glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
-            game->glsl_ = malloc(sizeof(struct ggl_glsl)); ;
-            ggl_glsl_compile_shaders(game->glsl_, "shaders/colorShading.vert", "shaders/colorShading.frag");
-            ggl_glsl_bind_attribute(game->glsl_);
-            ggl_glsl_link_shaders(game->glsl_);
+	        game->glsl_ = ggl_glsl_create();
+            ggl_glsl_init(game->glsl_, "shaders/colorShading.vert", "shaders/colorShading.frag");
 
+            game->sprite_ = ggl_sprite_create();
+            ggl_sprite_init(game->sprite_, -0.5f, -0.5f, 1.0f, 1.0f);
 		}
 	}
 	else
@@ -76,8 +72,8 @@ void ggl_game_destroy(struct ggl_game *game)
 	game->is_running_ = false;
 	SDL_DestroyWindow(game->window_);
    
+   	ggl_sprite_destroy(game->sprite_);    
     ggl_glsl_destroy(game->glsl_);        
-    ggl_sprite_destroy(game->sprite_);    
 
 	free(game);
 }
@@ -87,18 +83,14 @@ void ggl_game_render(struct ggl_game *game)
     glClearDepth(1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glUseProgram(game->glsl_->program_id);
-    glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
+	ggl_glsl_enable_shaders(game->glsl_);
     
 	GLint time_location = ggl_glsl_get_uniform_location(game->glsl_, "time");
 	glUniform1f(time_location, interval);
 
     ggl_sprite_draw(game->sprite_);
     
-    glUseProgram(0);
-    glDisableVertexAttribArray(0);
-	glDisableVertexAttribArray(1);
+	ggl_glsl_disable_shaders(game->glsl_);
 
     SDL_GL_SwapWindow(game->window_);
 }

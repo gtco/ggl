@@ -1,6 +1,14 @@
 #include "glsl.h"
 #include "asset.h"
 
+
+void ggl_glsl_init(struct ggl_glsl *glsl, const char* vertex_fp, const char* fragment_fp)
+{
+	ggl_glsl_compile_shaders(glsl, "shaders/colorShading.vert", "shaders/colorShading.frag");
+	ggl_glsl_bind_attribute(glsl);
+	ggl_glsl_link_shaders(glsl);
+}
+
 void ggl_glsl_compile_shaders(struct ggl_glsl *glsl, const char* vertex_fp, const char* fragment_fp)
 {
 	glsl->program_id = glCreateProgram();
@@ -8,6 +16,12 @@ void ggl_glsl_compile_shaders(struct ggl_glsl *glsl, const char* vertex_fp, cons
 	glsl->fragment_id = glCreateShader(GL_FRAGMENT_SHADER);
 	ggl_glsl_compile_shader(glsl->vertex_id, vertex_fp);
     ggl_glsl_compile_shader(glsl->fragment_id, fragment_fp);
+}
+
+void ggl_glsl_bind_attribute(struct ggl_glsl *glsl)
+{
+    glBindAttribLocation(glsl->program_id, 0, "vertexPosition");
+	glBindAttribLocation(glsl->program_id, 1, "vertexColor");
 }
 
 void ggl_glsl_compile_shader(GLuint id, const char* fp)
@@ -74,12 +88,6 @@ void ggl_glsl_link_shaders(struct ggl_glsl *glsl)
     glDeleteShader(glsl->fragment_id);
 }
 
-void ggl_glsl_bind_attribute(struct ggl_glsl *glsl)
-{
-    glBindAttribLocation(glsl->program_id, 0, "vertexPosition");
-	glBindAttribLocation(glsl->program_id, 1, "vertexColor");
-}
-
 void ggl_glsl_destroy(struct ggl_glsl *glsl)
 {
     assert (glsl != NULL);
@@ -97,3 +105,34 @@ GLint ggl_glsl_get_uniform_location(struct ggl_glsl *glsl, const char *uniformNa
 
 	return location;
 }
+
+struct ggl_glsl *ggl_glsl_create()
+{
+	struct ggl_glsl *glsl = malloc(sizeof(struct ggl_glsl));
+	assert(glsl != NULL);
+
+	glsl->program_id = 0;
+	glsl->vertex_id = 0;
+	glsl->fragment_id = 0;
+
+	return glsl;
+}
+
+void ggl_glsl_enable_shaders(struct ggl_glsl *glsl)
+{
+    glUseProgram(glsl->program_id);
+    // vertex position 
+    glEnableVertexAttribArray(0);
+    // vertex color
+	glEnableVertexAttribArray(1);
+}
+
+void ggl_glsl_disable_shaders(struct ggl_glsl *glsl)
+{
+    glUseProgram(0);
+    // vertex position 
+    glDisableVertexAttribArray(0);
+    // vertex color    
+	glDisableVertexAttribArray(1);
+}
+
