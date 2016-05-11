@@ -50,7 +50,7 @@ bool ggl_game_init(struct ggl_game *game, const char* title, int xpos, int ypos,
 			}
 #endif
             SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-            glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+            glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 
 	        game->glsl_ = ggl_glsl_create();
             ggl_glsl_init(game->glsl_, "shaders/colorShading.vert", "shaders/colorShading.frag");
@@ -59,7 +59,7 @@ bool ggl_game_init(struct ggl_game *game, const char* title, int xpos, int ypos,
             ggl_sprite_init(game->sprite_, -0.5f, -0.5f, 1.0f, 1.0f);
 
             texture = ggl_texture_create();
-            ggl_texture_load(texture, "textures/1.png");
+            ggl_texture_load(texture, "textures/5.png");
 		}
 	}
 	else
@@ -89,12 +89,18 @@ void ggl_game_render(struct ggl_game *game)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	ggl_glsl_enable_shaders(game->glsl_);
-    
+
+	glActiveTexture(GL_TEXTURE0);    
+	glBindTexture(GL_TEXTURE_2D, texture->id_);
+	GLint texture_location = ggl_glsl_get_uniform_location(game->glsl_, "my_sampler");
+	glUniform1i(texture_location, 0);
+
 	//GLint time_location = ggl_glsl_get_uniform_location(game->glsl_, "time");
 	//glUniform1f(time_location, 0);
 
     ggl_sprite_draw(game->sprite_);
-    
+
+	glBindTexture(GL_TEXTURE_2D, 0);    
 	ggl_glsl_disable_shaders(game->glsl_);
 
     SDL_GL_SwapWindow(game->window_);

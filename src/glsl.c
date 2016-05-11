@@ -22,6 +22,7 @@ void ggl_glsl_bind_attribute(struct ggl_glsl *glsl)
 {
     glBindAttribLocation(glsl->program_id, 0, "vertexPosition");
 	glBindAttribLocation(glsl->program_id, 1, "vertexColor");
+	glBindAttribLocation(glsl->program_id, 3, "vertexUV");	
 }
 
 void ggl_glsl_compile_shader(GLuint id, const char* fp)

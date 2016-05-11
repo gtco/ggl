@@ -31,15 +31,27 @@ bool ggl_sprite_init(struct ggl_sprite *sprite, float x, float y, float height, 
     struct ggl_vertex vertex_data[6];
 
     ggl_vertex_set_position(&vertex_data[0], x + width, y + height);
+    ggl_vertex_set_uv(&vertex_data[0], 1.0f, 1.0f);
+
     ggl_vertex_set_position(&vertex_data[1], x, y + height);
+    ggl_vertex_set_uv(&vertex_data[1], 0.0f, 1.0f);
+
     ggl_vertex_set_position(&vertex_data[2], x, y);
+    ggl_vertex_set_uv(&vertex_data[2], 0.0f, 0.0f);
+
     ggl_vertex_set_position(&vertex_data[3], x, y);
+    ggl_vertex_set_uv(&vertex_data[3], 0.0f, 0.0f);
+
     ggl_vertex_set_position(&vertex_data[4], x + width, y);
+    ggl_vertex_set_uv(&vertex_data[4], 1.0f, 0.0f);
+
     ggl_vertex_set_position(&vertex_data[5], x + width, y + height);
+    ggl_vertex_set_uv(&vertex_data[5], 1.0f, 1.0f);
+
 
 	for (int i = 0; i < 6; i++)
 	{
-        ggl_vertex_set_color(&vertex_data[i], 255, 133, 152, 255);
+        ggl_vertex_set_color(&vertex_data[i], 255, 255, 255, 255);
 	}
 
 	//Tell opengl to bind our vertex buffer object
@@ -66,6 +78,8 @@ void ggl_sprite_draw(struct ggl_sprite *sprite)
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(struct ggl_vertex), (void *) offsetof(struct ggl_vertex, position));
     // Color Attribute Pointer 
     glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(struct ggl_vertex), (void *) offsetof(struct ggl_vertex, color));    
+    // UV Attribute Pointer 
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(struct ggl_vertex), (void *) offsetof(struct ggl_vertex, uv));    
     
     // 6 = # of vertices
     glDrawArrays(GL_TRIANGLES, 0, 6);
