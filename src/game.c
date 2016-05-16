@@ -1,10 +1,8 @@
 #include "game.h"
 #include "glsl.h"
 #include "sprite.h"
-#include "texture.h"
 
 float interval = 0.0f;
-struct ggl_texture *texture = 0;
 
 struct ggl_game *ggl_game_create() 
 {
@@ -50,16 +48,26 @@ bool ggl_game_init(struct ggl_game *game, const char* title, int xpos, int ypos,
 			}
 #endif
             SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-            glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+            glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
 	        game->glsl_ = ggl_glsl_create();
             ggl_glsl_init(game->glsl_, "shaders/colorShading.vert", "shaders/colorShading.frag");
 
-            game->sprite_ = ggl_sprite_create();
-            ggl_sprite_init(game->sprite_, -0.5f, -0.5f, 1.0f, 1.0f);
+			game->sprite_ = (struct ggl_sprite **) calloc(5, sizeof(struct ggl_sprite *));
+            game->sprite_[0] = ggl_sprite_create();
+            ggl_sprite_init(game->sprite_[0], 0.0f, 0.0f, 0.1f, 0.1f, "textures/1.png");
 
-            texture = ggl_texture_create();
-            ggl_texture_load(texture, "textures/5.png");
+			game->sprite_[1] = ggl_sprite_create();
+			ggl_sprite_init(game->sprite_[1], -0.75f, 0.75f, 0.1f, 0.1f, "textures/2.png");
+
+			game->sprite_[2] = ggl_sprite_create();
+			ggl_sprite_init(game->sprite_[2], -0.75f, -0.75f, 0.1f, 0.1f, "textures/3.png");
+
+			game->sprite_[3] = ggl_sprite_create();
+			ggl_sprite_init(game->sprite_[3], 0.75f, 0.75f, 0.1f, 0.1f, "textures/4.png");
+
+			game->sprite_[4] = ggl_sprite_create();
+			ggl_sprite_init(game->sprite_[4], 0.75f, -0.75f, 0.1f, 0.1f, "textures/5.png");
 		}
 	}
 	else
@@ -77,7 +85,13 @@ void ggl_game_destroy(struct ggl_game *game)
 	game->is_running_ = false;
 	SDL_DestroyWindow(game->window_);
    
-   	ggl_sprite_destroy(game->sprite_);    
+	for (int i = 0; i < 5; i++)
+	{
+		ggl_sprite_destroy(game->sprite_[i]);
+	}
+
+	free(game->sprite_);
+
     ggl_glsl_destroy(game->glsl_);        
 
 	free(game);
@@ -91,14 +105,16 @@ void ggl_game_render(struct ggl_game *game)
 	ggl_glsl_enable_shaders(game->glsl_);
 
 	glActiveTexture(GL_TEXTURE0);    
-	glBindTexture(GL_TEXTURE_2D, texture->id_);
 	GLint texture_location = ggl_glsl_get_uniform_location(game->glsl_, "my_sampler");
 	glUniform1i(texture_location, 0);
 
 	//GLint time_location = ggl_glsl_get_uniform_location(game->glsl_, "time");
 	//glUniform1f(time_location, 0);
 
-    ggl_sprite_draw(game->sprite_);
+	for (int i = 0; i < 5; i++)
+	{
+		ggl_sprite_draw(game->sprite_[i]);
+	}
 
 	glBindTexture(GL_TEXTURE_2D, 0);    
 	ggl_glsl_disable_shaders(game->glsl_);

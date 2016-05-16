@@ -55,3 +55,4 @@ void ggl_texture_destroy(struct ggl_texture *texture)
 	assert(texture != NULL);
 	free(texture);
 }
+

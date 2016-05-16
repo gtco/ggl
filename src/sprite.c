@@ -11,12 +11,13 @@ struct ggl_sprite *ggl_sprite_create()
     sprite->height = 0;
     sprite->width = 0;
     sprite->vbo_id = 0;
-    
+    sprite->texture = ggl_texture_create();
+
     return sprite;
     
 }
 
-bool ggl_sprite_init(struct ggl_sprite *sprite, float x, float y, float height, float width)
+bool ggl_sprite_init(struct ggl_sprite *sprite, float x, float y, float height, float width, const char* texture_filename)
 {
     sprite->x = x;
     sprite->y = y;
@@ -61,11 +62,16 @@ bool ggl_sprite_init(struct ggl_sprite *sprite, float x, float y, float height, 
 	//Unbind the buffer (optional)
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
+    ggl_texture_load(sprite->texture, texture_filename);
+
     return true;
 }
 
 void ggl_sprite_draw(struct ggl_sprite *sprite)
 {
+    //bind the texture object
+    glBindTexture(GL_TEXTURE_2D, sprite->texture->id_);
+
 	//bind the buffer object
     glBindBuffer(GL_ARRAY_BUFFER, sprite->vbo_id);
     
@@ -92,6 +98,8 @@ void ggl_sprite_draw(struct ggl_sprite *sprite)
 void ggl_sprite_destroy(struct ggl_sprite *sprite)
 {
     assert(sprite != NULL);
+
+    ggl_texture_destroy(sprite->texture);
 
     if (sprite->vbo_id != 0)
     {
