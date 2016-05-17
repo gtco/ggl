@@ -88,7 +88,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;LODEPNG_NO_COMPILE_CPP;LODEPNG_NO_COMPILE_ENCODER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>c:\glew\include;C:\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\SDL2\include;c:\glew\include;C:\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="asset.c" />
+    <ClCompile Include="camera2d.cpp" />
     <ClCompile Include="game.c" />
     <ClCompile Include="glsl.c" />
     <ClCompile Include="lodepng.c" />
@@ -159,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="asset.h" />
+    <ClInclude Include="camera2d.h" />
     <ClInclude Include="dbg.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="ggl.h" />
