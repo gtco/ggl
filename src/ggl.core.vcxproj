@@ -87,7 +87,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;LODEPNG_NO_COMPILE_CPP;LODEPNG_NO_COMPILE_ENCODER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;LODEPNG_NO_COMPILE_ENCODER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>C:\SDL2\include;c:\glew\include;C:\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -148,13 +148,12 @@
   <ItemGroup>
     <ClCompile Include="asset.c" />
     <ClCompile Include="camera2d.cpp" />
-    <ClCompile Include="game.c" />
-    <ClCompile Include="glsl.c" />
-    <ClCompile Include="lodepng.c" />
-    <ClCompile Include="main.c" />
-    <ClCompile Include="scene.c" />
-    <ClCompile Include="sprite.c" />
-    <ClCompile Include="texture.c" />
+    <ClCompile Include="game.cpp" />
+    <ClCompile Include="glsl.cpp" />
+    <ClCompile Include="lodepng.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="sprite.cpp" />
+    <ClCompile Include="texture.cpp" />
     <ClCompile Include="tree.c" />
     <ClCompile Include="vertex.c" />
   </ItemGroup>
@@ -166,7 +165,6 @@
     <ClInclude Include="ggl.h" />
     <ClInclude Include="glsl.h" />
     <ClInclude Include="lodepng.h" />
-    <ClInclude Include="scene.h" />
     <ClInclude Include="sprite.h" />
     <ClInclude Include="texture.h" />
     <ClInclude Include="tree.h" />

@@ -30,4 +30,3 @@ private:
 	bool requires_update_;
 
 };
-

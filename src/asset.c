@@ -1,6 +1,6 @@
 #include "asset.h"
 
-uint8_t *ggl_asset_load_file(const char* file_path)
+const char *ggl_asset_load_file(const char* file_path)
 {
     FILE *fp;
     long sz;
@@ -36,5 +36,5 @@ uint8_t *ggl_asset_load_file(const char* file_path)
     }
     
     fclose(fp);
-	return buffer;
+	return (const char*) buffer;
 }
