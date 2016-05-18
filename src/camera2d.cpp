@@ -1,4 +1,4 @@
-#include "Camera2d.h"
+#include "camera2d.h"
 
 Camera2d::Camera2d() : position_(0.0f, 0.0f), camera_matrix_(1.0f), requires_update_(true), screen_width_(1), screen_height_(1), ortho_matrix_(1.0f)
 {
