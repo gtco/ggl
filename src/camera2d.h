@@ -9,7 +9,7 @@ public:
 	Camera2d();
 	~Camera2d();
 
-	void init(int screen_width, int screen_height);
+	void init(int screen_height, int screen_width);
 
 	void set_position(glm::vec2& position);
 	void set_scale(float scale);

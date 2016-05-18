@@ -23,7 +23,7 @@ int main(int argc, char** argv)
 	{
 		game->handle_events();
 		game->update(elapsed);
-		game->render();
+		game->draw();
 
 		current = SDL_GetTicks();
 		elapsed = current - last;
@@ -67,5 +67,5 @@ void ggl_calculate_fps(uint32_t elapsed)
 
 	current_frame++;
 
-	debug("fps = %f", fps);
+//	debug("fps = %f", fps);
 }

@@ -7,6 +7,7 @@ bool Sprite::init(float x, float y, float height, float width, const char* textu
     y_ = y;
     height_ = height;
     width_ = width;
+	vbo_id_ = 0;
     
     if (vbo_id_ == 0)
     {

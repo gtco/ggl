@@ -8,42 +8,34 @@
 
 #include "window.h"
 
-
-struct ggl_window *ggl_window_create()
+Window::Window()
 {
-    struct ggl_window *window = malloc(sizeof(struct ggl_window));
-    assert(window != NULL);
-    return window;
 }
 
-void ggl_window_destroy(struct ggl_window * window)
+Window::~Window()
 {
-    assert(window != NULL);
+	SDL_DestroyWindow(window_);
+}
 
-    SDL_DestroyWindow(window->window_);
+void Window::swap()
+{
+    SDL_GL_SwapWindow(window_);
+}
+
+bool Window::init(const char* title, int xpos, int ypos, int height, int width, int flags)
+{
+    window_ = SDL_CreateWindow(title, xpos, ypos, height, width,flags);
     
-    free(window);
-}
-
-void ggl_window_swap(struct ggl_window *window)
-{
-    SDL_GL_SwapWindow(window->window_);
-}
-
-bool ggl_window_init(struct ggl_window *window, const char* title, int xpos, int ypos, int height, int width, int flags)
-{
-    window->window_ = SDL_CreateWindow(title, xpos, ypos, height, width,flags);
-    
-    if (window->window_ != 0)
+    if (window_ != 0)
     {
 #ifdef __APPLE__
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 #endif
         SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
         
-        window->gl_context_ = SDL_GL_CreateContext(window->window_);
+        gl_context_ = SDL_GL_CreateContext(window_);
         
-        if (window->gl_context_ == 0)
+        if (gl_context_ == 0)
         {
             const char* err = SDL_GetError();
             log_err("Failed to create Open GL context %s", err);

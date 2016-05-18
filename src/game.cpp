@@ -4,74 +4,23 @@
 
 Game::Game() : is_running_(false), interval_(0.0f)
 {
-	//struct ggl_game *game = malloc(sizeof(struct ggl_game));
-	//assert(game != NULL);
-	//is_running_ = false;
-	//glsl_ = NULL;
-	//sprite_ = NULL;
-	//return game;
-
 }
 
 Game::~Game()
 {
-	//assert(game != NULL);
-	//is_running_ = false;
-	//SDL_DestroyWindow(window_);
-
-	//for (int i = 0; i < 5; i++)
-	//{
-	//	ggl_sprite_destroy(sprite_[i]);
-	//}
-
-	//free(sprite_);
-
-	//ggl_glsl_destroy(glsl_);
-
-	//free(game);
 }
 
 bool Game::init(const char * title, int xpos, int ypos, int height, int width, int flags)
 {
+	camera_.init(width, height);
+
 	if (SDL_Init(SDL_INIT_EVERYTHING) >= 0)
 	{
-		window_ = SDL_CreateWindow(title, xpos, ypos, height, width, flags);
-
-		if (window_ != 0)
+		if (window_.init(title, xpos, ypos, height, width, flags))
 		{
-#ifdef __APPLE__
-			SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-#endif
-			gl_context_ = SDL_GL_CreateContext(window_);
-
-			if (gl_context_ == 0)
-			{
-				const char* err = SDL_GetError();
-				log_err("Failed to create Open GL context %s", err);
-				return false;
-			}
-
-#ifdef __APPLE__
-			GLuint vertexArrayID;
-			glGenVertexArrays(1, &vertexArrayID);
-			glBindVertexArray(vertexArrayID);
-#endif
-
-#ifdef _WIN32
-			//Set up glew (optional but recommended)
-			GLenum error = glewInit();
-			if (error != GLEW_OK) {
-				log_err("Could not initialize glew!");
-			}
-#endif
-			SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-			glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-
-			glsl_ = new Glsl();
-			glsl_->init("shaders/colorShading.vert", "shaders/colorShading.frag");
-
-			sprite_ = new Sprite();
-			sprite_->init(-0.1f, -0.1f, 0.2f, 0.2f, "textures/4.png");
+			glsl_.init("shaders/colorShading.vert", "shaders/colorShading.frag");
+			player_.init(100.0f, 100.0f, 32.0f, 32.0f, "textures/5.png");
+			enemy_.init(100.0f, 150.0f, 32.0f, 32.0f, "textures/1.png");
 		}
 	}
 	else
@@ -81,40 +30,68 @@ bool Game::init(const char * title, int xpos, int ypos, int height, int width, i
 
 	is_running_ = true;
 	return true;
-
 }
 
-void Game::render()
+void Game::draw()
 {
 	glClearDepth(1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glsl_->enable_shaders();
+	glsl_.enable_shaders();
 
 	glActiveTexture(GL_TEXTURE0);
-	GLint texture_location = glsl_->get_uniform_location("my_sampler");
+	GLint texture_location = glsl_.get_uniform_location("my_sampler");
 	glUniform1i(texture_location, 0);
 
-	//GLint time_location = ggl_glsl_get_uniform_location(glsl_, "time");
-	//glUniform1f(time_location, 0);
+	// Set the camera matrix
+	GLint p_location = glsl_.get_uniform_location("P");
+	glm::mat4 camera_matrix = camera_.get_camera_matrix();
+	glUniformMatrix4fv(p_location, 1, GL_FALSE, &(camera_matrix[0][0]));
 
-	sprite_->draw();
+	enemy_.draw();
+	player_.draw();
 
 	glBindTexture(GL_TEXTURE_2D, 0);
-	glsl_->disable_shaders();
+	glsl_.disable_shaders();
 
-	SDL_GL_SwapWindow(window_);
+	window_.swap();
 }
 
 void Game::handle_events()
 {
-	SDL_Event event;
-	if (SDL_PollEvent(&event))
+	const float CAMERA_SPEED = 20.0f;
+	const float SCALE_SPEED = 0.1f;
+
+	SDL_Event evt;
+	if (SDL_PollEvent(&evt))
 	{
-		switch (event.type)
+		switch (evt.type)
 		{
 		case SDL_QUIT:
 			is_running_ = false;
+			break;
+		case SDL_KEYDOWN:
+			switch (evt.key.keysym.sym)
+			{
+			case SDLK_w:
+				camera_.set_position(camera_.get_position() + glm::vec2(0.0f, CAMERA_SPEED));
+				break;
+			case SDLK_s:
+				camera_.set_position(camera_.get_position() + glm::vec2(0.0f, -CAMERA_SPEED));
+				break;
+			case SDLK_a:
+				camera_.set_position(camera_.get_position() + glm::vec2(-CAMERA_SPEED, 0.0f));
+				break;
+			case SDLK_d:
+				camera_.set_position(camera_.get_position() + glm::vec2(CAMERA_SPEED, 0.0f));
+				break;
+			case SDLK_q:
+				camera_.set_scale(camera_.get_scale() + SCALE_SPEED);
+				break;
+			case SDLK_e:
+				camera_.set_scale(camera_.get_scale() - SCALE_SPEED);
+				break;
+			}
 			break;
 		default:
 			break;
@@ -124,5 +101,6 @@ void Game::handle_events()
 
 void Game::update(uint32_t elapsed)
 {
+	camera_.update();
 	interval_ = interval_ + 0.001f;
 }
