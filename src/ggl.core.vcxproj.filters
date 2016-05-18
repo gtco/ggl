@@ -15,31 +15,34 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="game.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="texture.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="scene.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="glsl.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="sprite.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="asset.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="lodepng.c">
+    <ClCompile Include="vertex.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="vertex.c">
+    <ClCompile Include="tree.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="camera2d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sprite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="glsl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lodepng.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,9 +59,6 @@
     <ClInclude Include="ggl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="scene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="glsl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -72,6 +72,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="vertex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="camera2d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

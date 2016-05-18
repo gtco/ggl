@@ -1,51 +1,36 @@
 #include "sprite.h"
 #include "vertex.h"
 
-struct ggl_sprite *ggl_sprite_create()
+bool Sprite::init(float x, float y, float height, float width, const char* texture_filename)
 {
-    struct ggl_sprite *sprite = malloc(sizeof(struct ggl_sprite));
-    assert(sprite != NULL);
-
-    sprite->x = 0;
-    sprite->y = 0;
-    sprite->height = 0;
-    sprite->width = 0;
-    sprite->vbo_id = 0;
+    x_ = x;
+    y_ = y;
+    height_ = height;
+    width_ = width;
     
-    return sprite;
-    
-}
-
-bool ggl_sprite_init(struct ggl_sprite *sprite, float x, float y, float height, float width)
-{
-    sprite->x = x;
-    sprite->y = y;
-    sprite->height = height;
-    sprite->width = width;
-    
-    if (sprite->vbo_id == 0)
+    if (vbo_id_ == 0)
     {
-        glGenBuffers(1, &sprite->vbo_id);
+        glGenBuffers(1, &vbo_id_);
     }
 
     struct ggl_vertex vertex_data[6];
 
-    ggl_vertex_set_position(&vertex_data[0], x + width, y + height);
+    ggl_vertex_set_position(&vertex_data[0], x_ + width_, y_ + height_);
     ggl_vertex_set_uv(&vertex_data[0], 1.0f, 1.0f);
 
-    ggl_vertex_set_position(&vertex_data[1], x, y + height);
+    ggl_vertex_set_position(&vertex_data[1], x_, y_ + height_);
     ggl_vertex_set_uv(&vertex_data[1], 0.0f, 1.0f);
 
-    ggl_vertex_set_position(&vertex_data[2], x, y);
+    ggl_vertex_set_position(&vertex_data[2], x_, y_);
     ggl_vertex_set_uv(&vertex_data[2], 0.0f, 0.0f);
 
-    ggl_vertex_set_position(&vertex_data[3], x, y);
+    ggl_vertex_set_position(&vertex_data[3], x_, y_);
     ggl_vertex_set_uv(&vertex_data[3], 0.0f, 0.0f);
 
-    ggl_vertex_set_position(&vertex_data[4], x + width, y);
+    ggl_vertex_set_position(&vertex_data[4], x_ + width_, y_);
     ggl_vertex_set_uv(&vertex_data[4], 1.0f, 0.0f);
 
-    ggl_vertex_set_position(&vertex_data[5], x + width, y + height);
+    ggl_vertex_set_position(&vertex_data[5], x_ + width_, y_ + height_);
     ggl_vertex_set_uv(&vertex_data[5], 1.0f, 1.0f);
 
 
@@ -55,19 +40,25 @@ bool ggl_sprite_init(struct ggl_sprite *sprite, float x, float y, float height, 
 	}
 
 	//Tell opengl to bind our vertex buffer object
-    glBindBuffer(GL_ARRAY_BUFFER, sprite->vbo_id);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo_id_);
 	//Upload the data to the GPU
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_data), vertex_data, GL_STATIC_DRAW);
 	//Unbind the buffer (optional)
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
+	texture_ = new Texture();
+    texture_->load(texture_filename);
+
     return true;
 }
 
-void ggl_sprite_draw(struct ggl_sprite *sprite)
+void Sprite::draw()
 {
+    //bind the texture object
+    glBindTexture(GL_TEXTURE_2D, texture_->get_id());
+
 	//bind the buffer object
-    glBindBuffer(GL_ARRAY_BUFFER, sprite->vbo_id);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo_id_);
     
 	//Tell opengl that we want to use the first
 	//attribute array. We only need one array right
@@ -89,14 +80,3 @@ void ggl_sprite_draw(struct ggl_sprite *sprite)
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void ggl_sprite_destroy(struct ggl_sprite *sprite)
-{
-    assert(sprite != NULL);
-
-    if (sprite->vbo_id != 0)
-    {
-        glDeleteBuffers(1, &sprite->vbo_id);
-    }
-
-    free(sprite);
-}

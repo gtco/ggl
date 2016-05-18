@@ -2,22 +2,24 @@
 
 #include "ggl.h"
 
-struct ggl_glsl {
-    GLuint program_id;
-    GLuint vertex_id;
-    GLuint fragment_id;
+class Glsl
+{
+public:
+	void init(const char* vertex_fp, const char* fragment_fp);
+	void compile_shaders(const char* vertex_fp, const char* fragment_fp);
+	void compile_shader(GLuint id, const char* fp);
+	void link_shaders();
+	void bind_attribute();
+//	void destroy(struct ggl_glsl *glsl);
+	GLint get_uniform_location(const char *uniformName);
+
+//	struct ggl_glsl *ggl_glsl_create();
+	void enable_shaders();
+	void disable_shaders();
+
+private:
+	GLuint program_id_;
+	GLuint vertex_id_;
+	GLuint fragment_id_;
+
 };
-
-
-void ggl_glsl_init(struct ggl_glsl *glsl, const char* vertex_fp, const char* fragment_fp);
-
-void ggl_glsl_compile_shaders(struct ggl_glsl *glsl, const char* vertex_fp, const char* fragment_fp);
-void ggl_glsl_compile_shader(GLuint id, const char* fp);
-void ggl_glsl_link_shaders(struct ggl_glsl *glsl);
-void ggl_glsl_bind_attribute(struct ggl_glsl *glsl);
-void ggl_glsl_destroy(struct ggl_glsl *glsl);
-GLint ggl_glsl_get_uniform_location(struct ggl_glsl *glsl, const char *uniformName);
-
-struct ggl_glsl *ggl_glsl_create();
-void ggl_glsl_enable_shaders(struct ggl_glsl *glsl);
-void ggl_glsl_disable_shaders(struct ggl_glsl *glsl);

@@ -26,5 +26,7 @@ void main() {
     
     fragmentColor = vertexColor;
 
-    fragmentUV = vertexUV;
+    //fragmentUV = vertexUV;
+    //flip texture
+    fragmentUV = vec2(vertexUV.x, 1.0 - vertexUV.y);
 }

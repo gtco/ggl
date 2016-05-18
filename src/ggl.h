@@ -26,8 +26,3 @@
 #include <GL/glu.h>
 #include <GL/glext.h>
 #endif
-
-typedef struct {
-  float x;
-  float y;
-} vec2;
