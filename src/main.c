@@ -1,49 +1,71 @@
 #include "ggl.h"
 #include "game.h"
+#include "tree.h"
 
-/*
-void load_image()
-{
-	SDL_Surface *surface = IMG_Load("data/8tiles.png");
-	texture = SDL_CreateTextureFromSurface(renderer, surface);
-	SDL_FreeSurface(surface);
+float fps = 0.0f;
+uint32_t frame_times[100];
+uint32_t current_frame = 0;
 
-	//	SDL_QueryTexture(texture, NULL, NULL, &sourceRect.w, &sourceRect.h);
-
-	int i = 6;
-	int n = (32 * i) + ((i + 1) * 10);
-
-	sourceRect.w = 32;
-	sourceRect.h = 32;
-
-	sourceRect.x = n;
-	sourceRect.y = 10;
-	destRect.x = (SCREEN_WIDTH/2) - 16;
-	destRect.y = (SCREEN_HEIGHT/2) - 16;
-
-	destRect.w = sourceRect.w;
-	destRect.h = sourceRect.h;
-}
-*/
+void ggl_calculate_fps(uint32_t elapsed);
 
 int main(int argc, char** argv)
 {
 	debug("Starting game");
 	struct ggl_game *game = ggl_game_create();
 
-	ggl_game_init(game, "GGL", 100, 100, 640, 480, 0);
+	ggl_game_init(game, "GGL", 100, 100, 640, 480, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 
 	uint32_t last = SDL_GetTicks();
+	uint32_t current = SDL_GetTicks();
+	uint32_t elapsed = current - last;
+
 	while (game->is_running_)
 	{
-		uint32_t current = SDL_GetTicks();
-		uint32_t elapsed = current - last;
 		ggl_game_handle_events(game);
 		ggl_game_update(game, elapsed);
 		ggl_game_render(game);
+
+		current = SDL_GetTicks();
+		elapsed = current - last;
+		last = current;
+		ggl_calculate_fps(elapsed);
 	}
 
 	debug("Ending game");
 	ggl_game_destroy(game);
 	exit(0);
+}
+
+
+void ggl_calculate_fps(uint32_t elapsed)
+{
+	if (!(current_frame % 10 == 0))
+	{
+		current_frame++;
+		return;
+	}
+
+	int frame_count;
+	frame_times[current_frame % 100] = elapsed;
+	if (current_frame < 100)
+	{
+		fps = 0;
+	}
+	else
+	{
+		frame_count = 100;
+		uint32_t total_sum = 0.0f;
+		for (int i = 0; i < 100; i++)
+		{
+			total_sum += frame_times[i];
+		}
+
+		total_sum /= frame_count;
+
+		fps = (total_sum > 0) ? 1000.0f / total_sum : 1001.0f;
+	}
+
+	current_frame++;
+
+	debug("fps = %f", fps);
 }
