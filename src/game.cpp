@@ -19,8 +19,8 @@ bool Game::init(const char * title, int xpos, int ypos, int height, int width, i
 		if (window_.init(title, xpos, ypos, height, width, flags))
 		{
 			glsl_.init("shaders/colorShading.vert", "shaders/colorShading.frag");
-			player_.init(100.0f, 100.0f, 32.0f, 32.0f, "textures/5.png");
-			enemy_.init(100.0f, 150.0f, 32.0f, 32.0f, "textures/1.png");
+			player_.init(-16.0f, -32.0f, 32.0f, 32.0f, "textures/5.png");
+			enemy_.init(-16.0f, 32.0f, 32.0f, 32.0f, "textures/1.png");
 		}
 	}
 	else
@@ -59,9 +59,9 @@ void Game::draw()
 
 void Game::handle_events()
 {
-	const float CAMERA_SPEED = 20.0f;
-	const float SCALE_SPEED = 0.1f;
-
+    float CAMERA_SPEED = 20.0f;
+    float SCALE_SPEED = 0.1f;
+    
 	SDL_Event evt;
 	if (SDL_PollEvent(&evt))
 	{

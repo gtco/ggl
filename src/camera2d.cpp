@@ -15,7 +15,7 @@ void Camera2d::init(int screen_height, int screen_width)
 	ortho_matrix_ = glm::ortho(0.0f, (float)screen_width_, 0.0f, (float)screen_height_);
 }
 
-void Camera2d::set_position(glm::vec2 & position)
+void Camera2d::set_position(glm::vec2 position)
 {
 	position_ = position;
 	requires_update_ = true;

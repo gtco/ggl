@@ -11,15 +11,15 @@ public:
 
 	void init(int screen_height, int screen_width);
 
-	void set_position(glm::vec2& position);
+	void set_position(glm::vec2 position);
 	void set_scale(float scale);
 
-	glm::vec2 get_position() { return position_; };
+    glm::vec2 get_position() { return position_; };
 	float get_scale() { return scale_; };
 	glm::mat4 get_camera_matrix() { return camera_matrix_; };
 
 	void update();
-
+    
 private:
 	int screen_width_;
 	int screen_height_;
