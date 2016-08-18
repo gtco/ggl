@@ -28,6 +28,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\mat3.c" />
     <ClCompile Include="src\mat4.c" />
+    <ClCompile Include="src\math2d.c" />
     <ClCompile Include="src\plane.c" />
     <ClCompile Include="src\quaternion.c" />
     <ClCompile Include="src\ray2.c" />
@@ -47,6 +48,7 @@
     <ClInclude Include="src\linear_algebra.h" />
     <ClInclude Include="src\mat3.h" />
     <ClInclude Include="src\mat4.h" />
+    <ClInclude Include="src\math2d.h" />
     <ClInclude Include="src\plane.h" />
     <ClInclude Include="src\quaternion.h" />
     <ClInclude Include="src\ray2.h" />

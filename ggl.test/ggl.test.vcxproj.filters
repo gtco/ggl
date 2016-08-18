@@ -72,6 +72,9 @@
     <ClCompile Include="src\GL\matrix.c">
       <Filter>Source Files\GL</Filter>
     </ClCompile>
+    <ClCompile Include="src\math2d.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\camera2d.h">
@@ -124,6 +127,9 @@
     </ClInclude>
     <ClInclude Include="src\GL\matrix.h">
       <Filter>Header Files\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math2d.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
