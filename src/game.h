@@ -1,10 +1,10 @@
 #pragma once
 
 #include "ggl.h"
-#include "sprite.h"
 #include "glsl.h"
 #include "window.h"
 #include "camera2d.h"
+#include "spritebatch.h"
 
 class Game
 {
@@ -20,9 +20,8 @@ public:
 private:
 	bool is_running_;
 	Window window_;
-	Sprite player_;
-	Sprite enemy_;
 	Glsl glsl_;
 	float interval_;
 	Camera2d camera_;
+	SpriteBatch sprite_batch_;
 };

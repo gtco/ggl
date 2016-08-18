@@ -1,6 +1,7 @@
 #include "game.h"
 #include "glsl.h"
 #include "sprite.h"
+#include "texture.h"
 
 Game::Game() : is_running_(false), interval_(0.0f)
 {
@@ -19,8 +20,7 @@ bool Game::init(const char * title, int xpos, int ypos, int height, int width, i
 		if (window_.init(title, xpos, ypos, height, width, flags))
 		{
 			glsl_.init("shaders/colorShading.vert", "shaders/colorShading.frag");
-			player_.init(-16.0f, -32.0f, 32.0f, 32.0f, "textures/5.png");
-			enemy_.init(-16.0f, 32.0f, 32.0f, 32.0f, "textures/1.png");
+			sprite_batch_.init();
 		}
 	}
 	else
@@ -48,8 +48,21 @@ void Game::draw()
 	glm::mat4 camera_matrix = camera_.get_camera_matrix();
 	glUniformMatrix4fv(p_location, 1, GL_FALSE, &(camera_matrix[0][0]));
 
-	enemy_.draw();
-	player_.draw();
+	static Texture texture_;
+	texture_.load("textures/5.png");
+	struct ggl_color color;
+	color.r = color.g = color.b = color.a = 255;
+
+	glm::vec4 pos(0.0f, 0.0f, 50.0f, 50.0f);
+	glm::vec4 uv(0.0f, 0.0f, 1.0f, 1.0f);
+
+	sprite_batch_.begin();
+
+	sprite_batch_.draw(pos, uv, 0, texture_.get_id(), color);
+	sprite_batch_.draw(pos + glm::vec4(55.0f,0.0f,0.0f,0.0f), uv, 0, texture_.get_id(), color);
+
+	sprite_batch_.end();
+	sprite_batch_.render_batch();
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glsl_.disable_shaders();
