@@ -9,7 +9,7 @@
 #define GOAL	16
 
 int compare_glm(glm::mat4 gl4, kmMat4 km4);
-int compare_la(struct ggl_mat4 gl4, kmMat4 km4);
+int compare_la(glm::mat4 gl4, struct ggl_mat4 m4);
 void test_km(int screen_width, int screen_height, glm::vec2 position);
 void test_la(int screen_width, int screen_height, glm::vec2 position);
 
@@ -28,6 +28,11 @@ int main(int argc, char** argv)
 
 void test_la(int screen_width, int screen_height, glm::vec2 position)
 {
+	Camera2d c;
+	c.init(screen_height, screen_width);
+	c.set_position(position);
+	c.update();
+
 	struct ggl_mat4 ortho = ggl_orthogonal(0.0f, (float)screen_width, 0.0f, (float)screen_height);
 	struct ggl_mat4 camera = IDENTITY_MATRIX;
 	struct ggl_mat4 tmp = IDENTITY_MATRIX;
@@ -35,20 +40,26 @@ void test_la(int screen_width, int screen_height, glm::vec2 position)
 	ggl_multiplymat4(&camera, &ortho, &tmp);
 	tmp = IDENTITY_MATRIX;
 	ggl_scale(&tmp, 1.0f, 1.0f, 0.0f);
-	ggl_multiplymat4(&camera, &camera, &tmp);
+	ggl_multiplymat4(&camera, &tmp, &camera);
 
-	kmMat4 kmOrtho;
-	kmMat4 kmCamera;
-	kmMat4 kmTmp;
-	kmMat4OrthographicProjection2(&kmOrtho, 0.0f, (float)screen_width, 0.0f, (float)screen_height);
-	kmMat4Identity(&kmCamera);
-	kmMat4Translation(&kmTmp, -position.x + (screen_width / 2), -position.y + (screen_height / 2), 0.0f);
-	kmMat4Multiply(&kmCamera, &kmOrtho, &kmTmp);
-	kmMat4Scaling(&kmTmp, 1.0f, 1.0f, 0.0f);
-	kmMat4Multiply(&kmCamera, &kmCamera, &kmTmp);
+	// Move Camera
+	for (int n = 1; n < 10; n++)
+	{
+		glm::vec2 new_position = glm::vec2((float) n, (float) -n);
+		float new_scale = ((float)n) * 0.5f;
+		c.set_position(new_position);
+		c.set_scale(new_scale);
+		c.update();
 
-	bool b = (compare_la(ortho, kmOrtho) == GOAL) && (compare_la(camera, kmCamera) == GOAL);
-	debug("calculations for la and kazmath match : %s", b ? "true" : "false");
+		ggl_translate(&tmp, -new_position.x + (screen_width / 2), -new_position.y + (screen_height / 2), 0.0f);
+		ggl_multiplymat4(&camera, &ortho, &tmp);
+		tmp = IDENTITY_MATRIX;
+		ggl_scale(&tmp, new_scale, new_scale, 0.0f);
+		ggl_multiplymat4(&camera, &tmp, &camera);
+
+		bool b = (compare_la(c.get_ortho_matrix(), ortho) == GOAL) && (compare_la(c.get_camera_matrix(), camera) == GOAL);
+		debug("calculations for glm and la match : %s", b ? "true" : "false");
+	}
 }
 
 void test_km(int screen_width, int screen_height, glm::vec2 position)
@@ -68,21 +79,23 @@ void test_km(int screen_width, int screen_height, glm::vec2 position)
 	kmMat4Scaling(&kmTmp, 1.0f, 1.0f, 0.0f);
 	kmMat4Multiply(&kmCamera, &kmCamera, &kmTmp);
 
-	// Move
+	// Move Camera
+	for (int n = 1; n < 10; n++)
+	{
+		glm::vec2 new_position = glm::vec2((float)n, (float)-n);
+		float new_scale = ((float)n) * 0.5f;
+		c.set_position(new_position);
+		c.set_scale(new_scale);
+		c.update();
 
-	glm::vec2 new_position = glm::vec2(1.0f, -1.0f);
-	c.set_position(new_position);
-//	c.set_scale(1.5f);
-	c.update();
+		kmMat4Translation(&kmTmp, -new_position.x + (screen_width / 2), -new_position.y + (screen_height / 2), 0.0f);
+		kmMat4Multiply(&kmCamera, &kmOrtho, &kmTmp);
+		kmMat4Scaling(&kmTmp, new_scale, new_scale, 0.0f);
+		kmMat4Multiply(&kmCamera, &kmTmp, &kmCamera);
 
-	kmMat4Translation(&kmTmp, -new_position.x + (screen_width / 2), -new_position.y + (screen_height / 2), 0.0f);
-	kmMat4Multiply(&kmCamera, &kmOrtho, &kmTmp);
-//	kmMat4Scaling(&kmTmp, 1.5f, 1.5f, 0.0f);
-//	kmMat4Multiply(&kmCamera, &kmCamera, &kmTmp);
-
-
-	bool b = (compare_glm(c.get_ortho_matrix(), kmOrtho) == GOAL) && (compare_glm(c.get_camera_matrix(), kmCamera) == GOAL);
-	debug("calculations for glm and kazmath match : %s", b ? "true" : "false");
+		bool b = (compare_glm(c.get_ortho_matrix(), kmOrtho) == GOAL) && (compare_glm(c.get_camera_matrix(), kmCamera) == GOAL);
+		debug("calculations for glm and kazmath match : %s", b ? "true" : "false");
+	}
 }
 
 int compare_glm(glm::mat4 gl4, kmMat4 km4)
@@ -108,7 +121,7 @@ int compare_glm(glm::mat4 gl4, kmMat4 km4)
 	return matches;
 }
 
-int compare_la(struct ggl_mat4 gl4, kmMat4 km4)
+int compare_la(glm::mat4 gl4, struct ggl_mat4 m4)
 {
 	int matches = 0;
 	int c = 0;
@@ -116,8 +129,8 @@ int compare_la(struct ggl_mat4 gl4, kmMat4 km4)
 	{
 		for (int j = 0; j < 4; j++)
 		{
-			float g = gl4.m[c];
-			float k = (float)km4.mat[c];
+			float g = gl4[i][j];
+			float k = (float)m4.m[c];
 
 			if (g == k)
 			{
