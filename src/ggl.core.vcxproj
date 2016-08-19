@@ -150,6 +150,7 @@
     <ClCompile Include="camera2d.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="glsl.cpp" />
+    <ClCompile Include="inputmanager.cpp" />
     <ClCompile Include="lodepng.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="sprite.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="ggl.h" />
     <ClInclude Include="glsl.h" />
+    <ClInclude Include="inputmanager.h" />
     <ClInclude Include="lodepng.h" />
     <ClInclude Include="sprite.h" />
     <ClInclude Include="spritebatch.h" />

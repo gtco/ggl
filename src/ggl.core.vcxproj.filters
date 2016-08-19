@@ -51,6 +51,9 @@
     <ClCompile Include="spritebatch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="inputmanager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h">
@@ -90,6 +93,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="spritebatch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inputmanager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

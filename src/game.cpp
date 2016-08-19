@@ -48,8 +48,11 @@ void Game::draw()
 	glm::mat4 camera_matrix = camera_.get_camera_matrix();
 	glUniformMatrix4fv(p_location, 1, GL_FALSE, &(camera_matrix[0][0]));
 
-	static Texture texture_;
-	texture_.load("textures/5.png");
+	static Texture player_texture_;
+	player_texture_.load("textures/5.png");
+	static Texture enemy_texture_;
+	enemy_texture_.load("textures/1.png");
+
 	struct ggl_color color;
 	color.r = color.g = color.b = color.a = 255;
 
@@ -58,8 +61,8 @@ void Game::draw()
 
 	sprite_batch_.begin();
 
-	sprite_batch_.draw(pos, uv, 0, texture_.get_id(), color);
-	sprite_batch_.draw(pos + glm::vec4(55.0f,0.0f,0.0f,0.0f), uv, 0, texture_.get_id(), color);
+	sprite_batch_.draw(pos - glm::vec4(55.0f, 0.0f, 0.0f, 0.0f), uv, 0, player_texture_.get_id(), color);
+	sprite_batch_.draw(pos + glm::vec4(55.0f, 0.0f, 0.0f, 0.0f), uv, 0, enemy_texture_.get_id(), color);
 
 	sprite_batch_.end();
 	sprite_batch_.render_batch();
@@ -72,8 +75,8 @@ void Game::draw()
 
 void Game::handle_events()
 {
-    float CAMERA_SPEED = 20.0f;
-    float SCALE_SPEED = 0.1f;
+    float CAMERA_SPEED = 0.7f;
+    float SCALE_SPEED = 0.005f;
     
 	SDL_Event evt;
 	if (SDL_PollEvent(&evt))
@@ -84,36 +87,43 @@ void Game::handle_events()
 			is_running_ = false;
 			break;
 		case SDL_KEYDOWN:
-			switch (evt.key.keysym.sym)
-			{
-			case SDLK_w:
-				camera_.set_position(camera_.get_position() + glm::vec2(0.0f, CAMERA_SPEED));
-				break;
-			case SDLK_s:
-				camera_.set_position(camera_.get_position() + glm::vec2(0.0f, -CAMERA_SPEED));
-				break;
-			case SDLK_a:
-				camera_.set_position(camera_.get_position() + glm::vec2(-CAMERA_SPEED, 0.0f));
-				break;
-			case SDLK_d:
-				camera_.set_position(camera_.get_position() + glm::vec2(CAMERA_SPEED, 0.0f));
-				break;
-			case SDLK_q:
-				camera_.set_scale(camera_.get_scale() + SCALE_SPEED);
-				break;
-			case SDLK_e:
-				camera_.set_scale(camera_.get_scale() - SCALE_SPEED);
-				break;
-			}
+			input_manager_.press_key(evt.key.keysym.sym);
+			break;
+		case SDL_KEYUP:
+			input_manager_.release_key(evt.key.keysym.sym);
 			break;
 		default:
 			break;
 		}
+	}
+
+	if (input_manager_.is_key_pressed(SDLK_w))
+	{
+		camera_.set_position(camera_.get_position() + glm::vec2(0.0f, -CAMERA_SPEED));
+	}
+	if (input_manager_.is_key_pressed(SDLK_s))
+	{
+		camera_.set_position(camera_.get_position() + glm::vec2(0.0f, CAMERA_SPEED));
+	}
+	if (input_manager_.is_key_pressed(SDLK_a))
+	{
+		camera_.set_position(camera_.get_position() + glm::vec2(-CAMERA_SPEED, 0.0f));
+	}
+	if (input_manager_.is_key_pressed(SDLK_d))
+	{
+		camera_.set_position(camera_.get_position() + glm::vec2(CAMERA_SPEED, 0.0f));
+	}
+	if (input_manager_.is_key_pressed(SDLK_q))
+	{
+		camera_.set_scale(camera_.get_scale() + SCALE_SPEED);
+	}
+	if (input_manager_.is_key_pressed(SDLK_e))
+	{
+		camera_.set_scale(camera_.get_scale() - SCALE_SPEED);
 	}
 }
 
 void Game::update(uint32_t elapsed)
 {
 	camera_.update();
-	interval_ = interval_ + 0.001f;
 }

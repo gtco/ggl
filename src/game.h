@@ -5,6 +5,7 @@
 #include "window.h"
 #include "camera2d.h"
 #include "spritebatch.h"
+#include "inputmanager.h"
 
 class Game
 {
@@ -24,4 +25,5 @@ private:
 	float interval_;
 	Camera2d camera_;
 	SpriteBatch sprite_batch_;
+	InputManager input_manager_;
 };
