@@ -12,6 +12,11 @@
 		37299DF81CD8340700BF03EE /* texture.c in Sources */ = {isa = PBXBuildFile; fileRef = 37299DF41CD8340700BF03EE /* texture.c */; };
 		3758206E1CDACBD200F64601 /* scene.c in Sources */ = {isa = PBXBuildFile; fileRef = 3758206C1CDACBD200F64601 /* scene.c */; };
 		375820711CDAE9F600F64601 /* glsl.c in Sources */ = {isa = PBXBuildFile; fileRef = 3758206F1CDAE9F600F64601 /* glsl.c */; };
+		3797365A1D6A348600669A9F /* asset.c in Sources */ = {isa = PBXBuildFile; fileRef = 379736501D6A348600669A9F /* asset.c */; };
+		3797365B1D6A348600669A9F /* lodepng.c in Sources */ = {isa = PBXBuildFile; fileRef = 379736521D6A348600669A9F /* lodepng.c */; };
+		3797365C1D6A348600669A9F /* sprite.c in Sources */ = {isa = PBXBuildFile; fileRef = 379736531D6A348600669A9F /* sprite.c */; };
+		3797365D1D6A348600669A9F /* tree.c in Sources */ = {isa = PBXBuildFile; fileRef = 379736571D6A348600669A9F /* tree.c */; };
+		3797365E1D6A348600669A9F /* vertex.c in Sources */ = {isa = PBXBuildFile; fileRef = 379736591D6A348600669A9F /* vertex.c */; };
 		37E6C5C81CD83180009292F8 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E6C5C71CD83180009292F8 /* SDL2.framework */; };
 		37E6C5CA1CD83199009292F8 /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E6C5C91CD83199009292F8 /* SDL2_image.framework */; };
 /* End PBXBuildFile section */
@@ -40,6 +45,16 @@
 		3758206D1CDACBD200F64601 /* scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = scene.h; path = src/scene.h; sourceTree = "<group>"; };
 		3758206F1CDAE9F600F64601 /* glsl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = glsl.c; path = src/glsl.c; sourceTree = "<group>"; };
 		375820701CDAE9F600F64601 /* glsl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = glsl.h; path = src/glsl.h; sourceTree = "<group>"; };
+		379736501D6A348600669A9F /* asset.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = asset.c; path = src/asset.c; sourceTree = "<group>"; };
+		379736511D6A348600669A9F /* asset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = asset.h; path = src/asset.h; sourceTree = "<group>"; };
+		379736521D6A348600669A9F /* lodepng.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lodepng.c; path = src/lodepng.c; sourceTree = "<group>"; };
+		379736531D6A348600669A9F /* sprite.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sprite.c; path = src/sprite.c; sourceTree = "<group>"; };
+		379736541D6A348600669A9F /* sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sprite.h; path = src/sprite.h; sourceTree = "<group>"; };
+		379736551D6A348600669A9F /* vertex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = vertex.h; path = src/vertex.h; sourceTree = "<group>"; };
+		379736561D6A348600669A9F /* lodepng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lodepng.h; path = src/lodepng.h; sourceTree = "<group>"; };
+		379736571D6A348600669A9F /* tree.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tree.c; path = src/tree.c; sourceTree = "<group>"; };
+		379736581D6A348600669A9F /* tree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tree.h; path = src/tree.h; sourceTree = "<group>"; };
+		379736591D6A348600669A9F /* vertex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = vertex.c; path = src/vertex.c; sourceTree = "<group>"; };
 		37E6C5B41CD83093009292F8 /* ggl */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ggl; sourceTree = BUILT_PRODUCTS_DIR; };
 		37E6C5C71CD83180009292F8 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
 		37E6C5C91CD83199009292F8 /* SDL2_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_image.framework; path = ../../../../../Library/Frameworks/SDL2_image.framework; sourceTree = "<group>"; };
@@ -61,6 +76,16 @@
 		37E6C5AB1CD83093009292F8 = {
 			isa = PBXGroup;
 			children = (
+				379736501D6A348600669A9F /* asset.c */,
+				379736511D6A348600669A9F /* asset.h */,
+				379736521D6A348600669A9F /* lodepng.c */,
+				379736531D6A348600669A9F /* sprite.c */,
+				379736541D6A348600669A9F /* sprite.h */,
+				379736551D6A348600669A9F /* vertex.h */,
+				379736561D6A348600669A9F /* lodepng.h */,
+				379736571D6A348600669A9F /* tree.c */,
+				379736581D6A348600669A9F /* tree.h */,
+				379736591D6A348600669A9F /* vertex.c */,
 				3758206F1CDAE9F600F64601 /* glsl.c */,
 				375820701CDAE9F600F64601 /* glsl.h */,
 				3758206B1CDACBD200F64601 /* ggl.h */,
@@ -142,9 +167,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3797365C1D6A348600669A9F /* sprite.c in Sources */,
+				3797365E1D6A348600669A9F /* vertex.c in Sources */,
+				3797365A1D6A348600669A9F /* asset.c in Sources */,
+				3797365B1D6A348600669A9F /* lodepng.c in Sources */,
 				375820711CDAE9F600F64601 /* glsl.c in Sources */,
 				37299DF71CD8340700BF03EE /* main.c in Sources */,
 				37299DF61CD8340700BF03EE /* game.c in Sources */,
+				3797365D1D6A348600669A9F /* tree.c in Sources */,
 				3758206E1CDACBD200F64601 /* scene.c in Sources */,
 				37299DF81CD8340700BF03EE /* texture.c in Sources */,
 			);

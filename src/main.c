@@ -28,7 +28,7 @@ int main(int argc, char** argv)
 		current = SDL_GetTicks();
 		elapsed = current - last;
 		last = current;
-		ggl_calculate_fps(elapsed);
+/*		ggl_calculate_fps(elapsed); */
 	}
 
 	debug("Ending game");
