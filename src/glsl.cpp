@@ -21,7 +21,7 @@ void Glsl::bind_attribute()
 {
     glBindAttribLocation(program_id_, 0, "vertexPosition");
 	glBindAttribLocation(program_id_, 1, "vertexColor");
-	glBindAttribLocation(program_id_, 3, "vertexUV");	
+	glBindAttribLocation(program_id_, 2, "vertexUV");	
 }
 
 void Glsl::compile_shader(GLuint id, const char* fp)
@@ -107,6 +107,9 @@ void Glsl::enable_shaders()
     glEnableVertexAttribArray(0);
     // vertex color
 	glEnableVertexAttribArray(1);
+	// uv
+	glEnableVertexAttribArray(2);
+
 }
 
 void Glsl::disable_shaders()
@@ -116,5 +119,7 @@ void Glsl::disable_shaders()
     glDisableVertexAttribArray(0);
     // vertex color    
 	glDisableVertexAttribArray(1);
+	// uv
+	glDisableVertexAttribArray(2);
 }
 

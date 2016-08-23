@@ -59,6 +59,10 @@ bool Window::init(const char* title, int xpos, int ypos, int height, int width, 
         
         // Set VSYNC on(1) or off(1)
         SDL_GL_SetSwapInterval(0);
+
+		// Enable alpha blend
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         
         debug("GL Version [%s]", glGetString(GL_VERSION));
         
