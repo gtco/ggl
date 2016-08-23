@@ -79,6 +79,8 @@ void ggl_sprite_draw(struct ggl_sprite *sprite)
 	//attribute array. We only need one array right
 	//now since we are only using position.
     glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+    glEnableVertexAttribArray(2);
     
     // Position Attribute Pointer : 2 = elements (x,y)
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(struct ggl_vertex), (void *) offsetof(struct ggl_vertex, position));
@@ -91,6 +93,8 @@ void ggl_sprite_draw(struct ggl_sprite *sprite)
     glDrawArrays(GL_TRIANGLES, 0, 6);
 	//Disable the vertex attrib array. This is not optional.
     glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);    
+    glDisableVertexAttribArray(2);        
 	//Unbind the VBO
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }

@@ -22,7 +22,7 @@ void ggl_glsl_bind_attribute(struct ggl_glsl *glsl)
 {
     glBindAttribLocation(glsl->program_id, 0, "vertexPosition");
 	glBindAttribLocation(glsl->program_id, 1, "vertexColor");
-	glBindAttribLocation(glsl->program_id, 3, "vertexUV");	
+	glBindAttribLocation(glsl->program_id, 2, "vertexUV");	
 }
 
 void ggl_glsl_compile_shader(GLuint id, const char* fp)
@@ -122,18 +122,10 @@ struct ggl_glsl *ggl_glsl_create()
 void ggl_glsl_enable_shaders(struct ggl_glsl *glsl)
 {
     glUseProgram(glsl->program_id);
-    // vertex position 
-    glEnableVertexAttribArray(0);
-    // vertex color
-	glEnableVertexAttribArray(1);
 }
 
 void ggl_glsl_disable_shaders(struct ggl_glsl *glsl)
 {
     glUseProgram(0);
-    // vertex position 
-    glDisableVertexAttribArray(0);
-    // vertex color    
-	glDisableVertexAttribArray(1);
 }
 

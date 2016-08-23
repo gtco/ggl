@@ -50,24 +50,15 @@ bool ggl_game_init(struct ggl_game *game, const char* title, int xpos, int ypos,
             SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
             glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
+			glEnable (GL_BLEND);
+			glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	        game->glsl_ = ggl_glsl_create();
             ggl_glsl_init(game->glsl_, "shaders/colorShading.vert", "shaders/colorShading.frag");
 
-			game->sprite_ = (struct ggl_sprite **) calloc(5, sizeof(struct ggl_sprite *));
-            game->sprite_[0] = ggl_sprite_create();
-            ggl_sprite_init(game->sprite_[0], 0.0f, 0.0f, 0.1f, 0.1f, "textures/1.png");
+            game->sprite_ = ggl_sprite_create();
+            ggl_sprite_init(game->sprite_, -0.5f, -0.5f, 1.0f, 1.0f, "textures/6.png");
 
-			game->sprite_[1] = ggl_sprite_create();
-			ggl_sprite_init(game->sprite_[1], -0.75f, 0.75f, 0.1f, 0.1f, "textures/2.png");
-
-			game->sprite_[2] = ggl_sprite_create();
-			ggl_sprite_init(game->sprite_[2], -0.75f, -0.75f, 0.1f, 0.1f, "textures/3.png");
-
-			game->sprite_[3] = ggl_sprite_create();
-			ggl_sprite_init(game->sprite_[3], 0.75f, 0.75f, 0.1f, 0.1f, "textures/4.png");
-
-			game->sprite_[4] = ggl_sprite_create();
-			ggl_sprite_init(game->sprite_[4], 0.75f, -0.75f, 0.1f, 0.1f, "textures/5.png");
 		}
 	}
 	else
@@ -84,14 +75,7 @@ void ggl_game_destroy(struct ggl_game *game)
 	assert(game != NULL);
 	game->is_running_ = false;
 	SDL_DestroyWindow(game->window_);
-   
-	for (int i = 0; i < 5; i++)
-	{
-		ggl_sprite_destroy(game->sprite_[i]);
-	}
-
-	free(game->sprite_);
-
+	ggl_sprite_destroy(game->sprite_);
     ggl_glsl_destroy(game->glsl_);        
 
 	free(game);
@@ -111,10 +95,7 @@ void ggl_game_render(struct ggl_game *game)
 	//GLint time_location = ggl_glsl_get_uniform_location(game->glsl_, "time");
 	//glUniform1f(time_location, 0);
 
-	for (int i = 0; i < 5; i++)
-	{
-		ggl_sprite_draw(game->sprite_[i]);
-	}
+	ggl_sprite_draw(game->sprite_);
 
 	glBindTexture(GL_TEXTURE_2D, 0);    
 	ggl_glsl_disable_shaders(game->glsl_);
