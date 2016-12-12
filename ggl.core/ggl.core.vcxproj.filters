@@ -15,87 +15,87 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="asset.c">
+    <ClCompile Include="src\asset.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="vertex.c">
+    <ClCompile Include="src\vertex.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tree.c">
+    <ClCompile Include="src\tree.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="camera2d.cpp">
+    <ClCompile Include="src\camera2d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="game.cpp">
+    <ClCompile Include="src\game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="texture.cpp">
+    <ClCompile Include="src\texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sprite.cpp">
+    <ClCompile Include="src\sprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="glsl.cpp">
+    <ClCompile Include="src\glsl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="lodepng.cpp">
+    <ClCompile Include="src\lodepng.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="window.cpp">
+    <ClCompile Include="src\window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="spritebatch.cpp">
+    <ClCompile Include="src\spritebatch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="inputmanager.cpp">
+    <ClCompile Include="src\inputmanager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="game.h">
+    <ClInclude Include="src\game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="dbg.h">
+    <ClInclude Include="src\dbg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="texture.h">
+    <ClInclude Include="src\texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ggl.h">
+    <ClInclude Include="src\ggl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="glsl.h">
+    <ClInclude Include="src\glsl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sprite.h">
+    <ClInclude Include="src\sprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="asset.h">
+    <ClInclude Include="src\asset.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="lodepng.h">
+    <ClInclude Include="src\lodepng.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vertex.h">
+    <ClInclude Include="src\vertex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="tree.h">
+    <ClInclude Include="src\tree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="camera2d.h">
+    <ClInclude Include="src\camera2d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="window.h">
+    <ClInclude Include="src\window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="spritebatch.h">
+    <ClInclude Include="src\spritebatch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inputmanager.h">
+    <ClInclude Include="src\inputmanager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

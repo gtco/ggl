@@ -146,35 +146,35 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="asset.c" />
-    <ClCompile Include="camera2d.cpp" />
-    <ClCompile Include="game.cpp" />
-    <ClCompile Include="glsl.cpp" />
-    <ClCompile Include="inputmanager.cpp" />
-    <ClCompile Include="lodepng.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="sprite.cpp" />
-    <ClCompile Include="spritebatch.cpp" />
-    <ClCompile Include="texture.cpp" />
-    <ClCompile Include="tree.c" />
-    <ClCompile Include="vertex.c" />
-    <ClCompile Include="window.cpp" />
+    <ClCompile Include="src\asset.c" />
+    <ClCompile Include="src\camera2d.cpp" />
+    <ClCompile Include="src\game.cpp" />
+    <ClCompile Include="src\glsl.cpp" />
+    <ClCompile Include="src\inputmanager.cpp" />
+    <ClCompile Include="src\lodepng.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\sprite.cpp" />
+    <ClCompile Include="src\spritebatch.cpp" />
+    <ClCompile Include="src\texture.cpp" />
+    <ClCompile Include="src\tree.c" />
+    <ClCompile Include="src\vertex.c" />
+    <ClCompile Include="src\window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="asset.h" />
-    <ClInclude Include="camera2d.h" />
-    <ClInclude Include="dbg.h" />
-    <ClInclude Include="game.h" />
-    <ClInclude Include="ggl.h" />
-    <ClInclude Include="glsl.h" />
-    <ClInclude Include="inputmanager.h" />
-    <ClInclude Include="lodepng.h" />
-    <ClInclude Include="sprite.h" />
-    <ClInclude Include="spritebatch.h" />
-    <ClInclude Include="texture.h" />
-    <ClInclude Include="tree.h" />
-    <ClInclude Include="vertex.h" />
-    <ClInclude Include="window.h" />
+    <ClInclude Include="src\asset.h" />
+    <ClInclude Include="src\camera2d.h" />
+    <ClInclude Include="src\dbg.h" />
+    <ClInclude Include="src\game.h" />
+    <ClInclude Include="src\ggl.h" />
+    <ClInclude Include="src\glsl.h" />
+    <ClInclude Include="src\inputmanager.h" />
+    <ClInclude Include="src\lodepng.h" />
+    <ClInclude Include="src\sprite.h" />
+    <ClInclude Include="src\spritebatch.h" />
+    <ClInclude Include="src\texture.h" />
+    <ClInclude Include="src\tree.h" />
+    <ClInclude Include="src\vertex.h" />
+    <ClInclude Include="src\window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

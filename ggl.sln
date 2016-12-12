@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ggl.core", "src\ggl.core.vcxproj", "{58A1B4A4-55C6-42D0-BD45-F385A37A49EB}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ggl.core", "ggl.core\ggl.core.vcxproj", "{58A1B4A4-55C6-42D0-BD45-F385A37A49EB}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ggl.test", "ggl.test\ggl.test.vcxproj", "{FB47E38F-F799-4180-B362-B752A9D81582}"
 EndProject
