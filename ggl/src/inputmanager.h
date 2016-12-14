@@ -1,17 +1,16 @@
 #pragma once
 
-#include <unordered_map>
+#include "ggl.h"
 
-class InputManager
-{
-public:
-	InputManager();
-	~InputManager();
-	void press_key(uint32_t key_id);
-	void release_key(uint32_t key_id);
-	bool is_key_pressed(uint32_t key_id);
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-private:
-	std::unordered_map<uint32_t, bool> key_map_;
+void ggl_inputmanager_press_key(uint32_t key_id);
+void ggl_inputmanager_release_key(uint32_t key_id);
+bool ggl_inputmanager_is_key_pressed(uint32_t key_id);
 
-};
+#ifdef __cplusplus
+}
+#endif
+

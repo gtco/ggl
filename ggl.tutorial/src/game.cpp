@@ -87,37 +87,37 @@ void Game::handle_events()
 			is_running_ = false;
 			break;
 		case SDL_KEYDOWN:
-			input_manager_.press_key(evt.key.keysym.sym);
+			ggl_inputmanager_press_key(evt.key.keysym.sym);
 			break;
 		case SDL_KEYUP:
-			input_manager_.release_key(evt.key.keysym.sym);
+			ggl_inputmanager_release_key(evt.key.keysym.sym);
 			break;
 		default:
 			break;
 		}
 	}
 
-	if (input_manager_.is_key_pressed(SDLK_w))
+	if (ggl_inputmanager_is_key_pressed(SDLK_w))
 	{
 		camera_.set_position(camera_.get_position() + glm::vec2(0.0f, -CAMERA_SPEED));
 	}
-	if (input_manager_.is_key_pressed(SDLK_s))
+	if (ggl_inputmanager_is_key_pressed(SDLK_s))
 	{
 		camera_.set_position(camera_.get_position() + glm::vec2(0.0f, CAMERA_SPEED));
 	}
-	if (input_manager_.is_key_pressed(SDLK_a))
+	if (ggl_inputmanager_is_key_pressed(SDLK_a))
 	{
 		camera_.set_position(camera_.get_position() + glm::vec2(-CAMERA_SPEED, 0.0f));
 	}
-	if (input_manager_.is_key_pressed(SDLK_d))
+	if (ggl_inputmanager_is_key_pressed(SDLK_d))
 	{
 		camera_.set_position(camera_.get_position() + glm::vec2(CAMERA_SPEED, 0.0f));
 	}
-	if (input_manager_.is_key_pressed(SDLK_q))
+	if (ggl_inputmanager_is_key_pressed(SDLK_q))
 	{
 		camera_.set_scale(camera_.get_scale() + SCALE_SPEED);
 	}
-	if (input_manager_.is_key_pressed(SDLK_e))
+	if (ggl_inputmanager_is_key_pressed(SDLK_e))
 	{
 		camera_.set_scale(camera_.get_scale() - SCALE_SPEED);
 	}

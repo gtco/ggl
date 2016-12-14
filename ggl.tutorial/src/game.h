@@ -25,5 +25,4 @@ private:
 	float interval_;
 	Camera2d camera_;
 	SpriteBatch sprite_batch_;
-	InputManager input_manager_;
 };
