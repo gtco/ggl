@@ -47,7 +47,7 @@ void ggl_calculate_fps(uint32_t elapsed)
 	
 	frame_times[current_frame % 99] = elapsed;
 
-	if (current_frame % 100 == 0) {
+	if (current_frame % 10000 == 0) {
 
 		uint32_t total_sum = 0.0f;
 		for (int i = 0; i < 99; i++)
@@ -58,6 +58,6 @@ void ggl_calculate_fps(uint32_t elapsed)
 		total_sum /= 100;
 
 		fps = (total_sum > 0) ? 1000.0f / total_sum : 1001.0f;
-		debug("fps = %f", fps);
+//		debug("fps = %f", fps);
 	}
 }

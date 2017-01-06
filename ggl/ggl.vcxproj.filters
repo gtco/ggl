@@ -101,7 +101,7 @@
     <ClCompile Include="src\window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\inputmanager.c">
+    <ClCompile Include="src\inputmanager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

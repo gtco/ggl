@@ -38,3 +38,14 @@ void Camera2d::update()
 		requires_update_ = false;
 	}
 }
+
+glm::vec2 Camera2d::convert_screen_to_world(glm::vec2 screen_coords)
+{
+	// zero is center
+	screen_coords -= glm::vec2(screen_width_ / 2, screen_height_ / 2);
+	// scale 
+	screen_coords /= scale_;
+	// translate position
+	screen_coords += position_;
+	return screen_coords;
+}

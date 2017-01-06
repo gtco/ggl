@@ -50,8 +50,8 @@ void Game::draw()
 
 	static Texture player_texture_;
 	player_texture_.load("textures/5.png");
-	static Texture enemy_texture_;
-	enemy_texture_.load("textures/1.png");
+//	static Texture enemy_texture_;
+//	enemy_texture_.load("textures/1.png");
 
 	struct ggl_color color;
 	color.r = color.g = color.b = color.a = 255;
@@ -61,8 +61,8 @@ void Game::draw()
 
 	sprite_batch_.begin();
 
-	sprite_batch_.draw(pos - glm::vec4(55.0f, 0.0f, 0.0f, 0.0f), uv, 0, player_texture_.get_id(), color);
-	sprite_batch_.draw(pos + glm::vec4(55.0f, 0.0f, 0.0f, 0.0f), uv, 0, enemy_texture_.get_id(), color);
+	sprite_batch_.draw(pos, uv, 0, player_texture_.get_id(), color);
+//	sprite_batch_.draw(pos + glm::vec4(55.0f, 0.0f, 0.0f, 0.0f), uv, 0, enemy_texture_.get_id(), color);
 
 	sprite_batch_.end();
 	sprite_batch_.render_batch();
@@ -87,39 +87,54 @@ void Game::handle_events()
 			is_running_ = false;
 			break;
 		case SDL_KEYDOWN:
-			ggl_inputmanager_press_key(evt.key.keysym.sym);
+			input_manager_.press_key(evt.key.keysym.sym);
 			break;
 		case SDL_KEYUP:
-			ggl_inputmanager_release_key(evt.key.keysym.sym);
+			input_manager_.release_key(evt.key.keysym.sym);
+			break;
+		case SDL_MOUSEBUTTONDOWN:
+			input_manager_.press_key(evt.button.button);
+			break;
+		case SDL_MOUSEBUTTONUP:
+			input_manager_.release_key(evt.button.button);
+			break;
+		case SDL_MOUSEMOTION:
+			input_manager_.set_mouse_coords(evt.motion.x, evt.motion.y);
 			break;
 		default:
 			break;
 		}
 	}
 
-	if (ggl_inputmanager_is_key_pressed(SDLK_w))
+	if (input_manager_.is_key_pressed(SDLK_w))
 	{
 		camera_.set_position(camera_.get_position() + glm::vec2(0.0f, -CAMERA_SPEED));
 	}
-	if (ggl_inputmanager_is_key_pressed(SDLK_s))
+	if (input_manager_.is_key_pressed(SDLK_s))
 	{
 		camera_.set_position(camera_.get_position() + glm::vec2(0.0f, CAMERA_SPEED));
 	}
-	if (ggl_inputmanager_is_key_pressed(SDLK_a))
+	if (input_manager_.is_key_pressed(SDLK_a))
 	{
 		camera_.set_position(camera_.get_position() + glm::vec2(-CAMERA_SPEED, 0.0f));
 	}
-	if (ggl_inputmanager_is_key_pressed(SDLK_d))
+	if (input_manager_.is_key_pressed(SDLK_d))
 	{
 		camera_.set_position(camera_.get_position() + glm::vec2(CAMERA_SPEED, 0.0f));
 	}
-	if (ggl_inputmanager_is_key_pressed(SDLK_q))
+	if (input_manager_.is_key_pressed(SDLK_q))
 	{
 		camera_.set_scale(camera_.get_scale() + SCALE_SPEED);
 	}
-	if (ggl_inputmanager_is_key_pressed(SDLK_e))
+	if (input_manager_.is_key_pressed(SDLK_e))
 	{
 		camera_.set_scale(camera_.get_scale() - SCALE_SPEED);
+	}
+	if (input_manager_.is_key_pressed(SDL_BUTTON_LEFT))
+	{
+		struct ggl_vec2 mouse_coords = input_manager_.get_mouse_coords();
+		glm::vec2 world_coords = camera_.convert_screen_to_world(glm::vec2(mouse_coords.x, mouse_coords.y));
+		debug("x = %f, y = %f", world_coords.x, world_coords.y);
 	}
 }
 

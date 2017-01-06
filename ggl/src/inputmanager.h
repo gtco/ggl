@@ -1,16 +1,20 @@
 #pragma once
 
 #include "ggl.h"
+#include "vertex.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+class InputManager
+{
+public:
+	InputManager();
+	~InputManager();
+	void press_key(uint32_t key_id);
+	void release_key(uint32_t key_id);
+	bool is_key_pressed(uint32_t key_id);
+	void set_mouse_coords(float x, float y);
+	struct ggl_vec2 get_mouse_coords();
 
-void ggl_inputmanager_press_key(uint32_t key_id);
-void ggl_inputmanager_release_key(uint32_t key_id);
-bool ggl_inputmanager_is_key_pressed(uint32_t key_id);
-
-#ifdef __cplusplus
-}
-#endif
-
+private:
+	bool key_map_[255];
+	struct ggl_vec2 mouse_coords_;
+};

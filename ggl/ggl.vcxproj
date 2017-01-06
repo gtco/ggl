@@ -157,7 +157,7 @@
     <ClCompile Include="src\asset.c" />
     <ClCompile Include="src\camera2d.cpp" />
     <ClCompile Include="src\glsl.cpp" />
-    <ClCompile Include="src\inputmanager.c" />
+    <ClCompile Include="src\inputmanager.cpp" />
     <ClCompile Include="src\lodepng.cpp" />
     <ClCompile Include="src\math2d.c" />
     <ClCompile Include="src\scene.c" />

@@ -19,6 +19,8 @@ public:
 	glm::mat4 get_camera_matrix() { return camera_matrix_; };
 
 	void update();
+
+	glm::vec2 convert_screen_to_world(glm::vec2 screen_coords);
     
 private:
 	int screen_width_;
